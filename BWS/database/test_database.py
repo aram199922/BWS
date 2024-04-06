@@ -1,4 +1,4 @@
-from BWS.BWS.database import Function_Codes
+import Function_Codes
 import os
 import pandas as pd
 
