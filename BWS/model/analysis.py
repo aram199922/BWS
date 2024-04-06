@@ -1,5 +1,5 @@
 from __init__ import design_creation
-from database.sqlite import get_attributes
+from database.Function_Codes import get_attributes
 
 def get_column_from_database(column_name):
     """
