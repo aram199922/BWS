@@ -213,8 +213,6 @@ def create_table(column_name, attributes):
     db.close()
 
 
-import sqlite3
-
 def main():
     create_database()
     db = sqlite3.connect("testDB.db")

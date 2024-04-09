@@ -1,7 +1,7 @@
 from __init__ import design_creation
-from database.Function_Codes import get_attributes
+from ..database.Function_Codes import get_attributes
 
-def get_column_from_database(column_name):
+def get_survey_design(column_name):
     """
     Retrieve the specified column from the database.
 
@@ -13,23 +13,28 @@ def get_column_from_database(column_name):
     """
     # Assuming the column name is already sanitized
     column_data = get_attributes(column_name)
-    return column_data
 
-# Get the desired column from the database
-column_name = "xiomi"  # Specify the name of the column you want to retrieve
-column_data = get_column_from_database(column_name)
-print(column_data)
-# Check if column_data is not None and handle NaN values
-if column_data:
-    # Extract values from tuples and handle NaN values
-    column_values = [value[0] for value in column_data if value[0] is not None]
-else:
-    print("No attributes found for the specified column.")
-    column_values = []
+    if column_data:
+        # Extract values from tuples and handle NaN values
+        column_values = [value[0] for value in column_data if value[0] is not None]
+    else:
+        print("No attributes found for the specified column.")
+        column_values = []
+        return
+    # Pass the column values to the design_creation function
+    if column_values:
+        survey_design, numbered_design = design_creation(column_values)
+    else:
+        print("No attributes found for the specified column.")
+        # Handle the case where no attributes are found for the specified column
+        return
 
-# Pass the column values to the design_creation function
-if column_values:
-    survey_design, numbered_design = design_creation(column_values)
-else:
-    print("No attributes found for the specified column.")
-    # Handle the case where no attributes are found for the specified column
+    return survey_design
+
+def push_survey_design(survey_design, column_name):
+    table_name = f"survey.{column_name}"
+    pandas_to_sql(survey_design, table_name)
+    return
+
+column_name = "xiomi"
+
