@@ -213,17 +213,15 @@ def create_table(column_name, attributes):
     db.close()
 
 
+import sqlite3
+
 def main():
     create_database()
     db = sqlite3.connect("testDB.db")
     c = db.cursor()
     db.commit()
     db.close()
-
-    db = sqlite3.connect("testDB.db")
-    c = db.cursor()
-    c.execute("PRAGMA table_info(Features)")
-    columns = [column[1] for column in c.fetchall()]
-    db.close()
+    
 if __name__ == "__main__":
     main()
+
