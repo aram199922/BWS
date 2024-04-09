@@ -1,23 +1,26 @@
+import os
+import sys
+
+current_directory = os.getcwd()
+sys.path.insert(0, current_directory)
+
+import uvicorn
 from fastapi import FastAPI
-from typing import List
-import sqlite3
+from starlette.responses import RedirectResponse
+from BWS.database.db_interactions import insert_attributes
 
 app = FastAPI()
 
+@app.post("/Provide your company name, product and its attributes/")
+async def inserting_attributes(Company: str, Product: str, Attributes: list[str]):
+    column_name = f"{Company} {Product}"
+    insert_attributes(column_name, Attributes)
+    return {"Data inserted successfully"}
 
-#Code to get the company name, product name and attributes
-#I ran this by python -m uvicorn api:app
-def insert_attributes(table_name, column_name, attribute_list):
-    conn = sqlite3.connect('testDB.db')
-    c = conn.cursor()
-    c.execute(f"INSERT INTO {table_name} (column_name, attribute_list) VALUES (?, ?)", (column_name, attribute_list))
-    conn.commit()
-    conn.close()
+# Redirect root URL to /docs
+@app.get("/", include_in_schema=False)
+async def redirect_to_docs():
+    return RedirectResponse(url="/docs")
 
-@app.post("/create_product")
-async def create_product(company: str, product: str, attributes: str):
-    column_name = f"{company}.{product}"
-    # Split the attributes string into a list using comma as delimiter
-    attributes_list = attributes.split(",")
-    insert_attributes("products", column_name, ",".join(attributes_list))
-    return {"message": "Product created successfully"}
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)

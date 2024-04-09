@@ -8,7 +8,7 @@ install_requires = [line for line in lines]
 '''
 
 setup(
-    name="BWS",
+    name="myBWS",
     description="Tool for conducting and analyzing best-worst scaling surveys",
     long_description=pathlib.Path("README.md").read_text(),
     long_description_content_type="text/markdown",
