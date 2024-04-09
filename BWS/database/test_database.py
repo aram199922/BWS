@@ -21,13 +21,24 @@ cr_db = Function_Codes.create_database()
 #df = Function_Codes.read_table("Master_Design")
 #print(df)
 
-#insert neccessary attributes (specify the table)
-#inst_attr = Function_Codes.insert_attributes("Master_Design", 'w221', ['value1', 'value2', 'value3','value4','value5','value6','value7','value8','value9','value10'] )
+#insert neccessary attributes 
+#inst_attr = Function_Codes.insert_attributes( 'w222', ['value', 'value2', 'value3','value4','value5','value6','value7','value8','value9','value10'] )
 #print(inst_attr)
 
 #check if they were added 
-#df2 = Function_Codes.get_attributes('Master_Design','w221')
+#df2 = Function_Codes.get_attributes('w222')
 #print(df2)
+
+#df3 = Function_Codes.read_table('Attributes')
+#print(df3)
+
+#remove_column_or_row takes two arguments(column_name, to_remove)
+#if to_remove is row it will remove only it if its a column_name it will remove the entire column
+#df4 = Function_Codes.remove_column_or_row('w222', 'value4')
+
+#updating a row or a column name
+#write a column name, a row or column name you want to replace, and what you want to replace with
+#df5 = Function_Codes.update_row_or_column("w222", "value8", "value88")
 
 #currently we dont need this function
 #its may be needed in the future so it needs some upgrade
