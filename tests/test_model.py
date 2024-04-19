@@ -18,6 +18,6 @@ print(survey_design.head())
 analysis.push_survey_design('lyov', survey_design)
 
 # Question ?????????
-#df = db_interactions.sql_to_pandas('SELECT * from survey.lyov')
+#df = db_interactions.sql_to_pandas('SELECT * from survey_lyov')
 #print(df.head())
 

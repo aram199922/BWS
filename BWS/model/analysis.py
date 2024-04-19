@@ -38,6 +38,6 @@ def get_survey_design(column_name):
     return survey_design
 
 def push_survey_design(column_name,survey_design):
-    table_name = f"survey.{column_name}"
+    table_name = f"survey_{column_name}"
     db_interactions.pandas_to_sql(survey_design, table_name)
     return
