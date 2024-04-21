@@ -26,7 +26,7 @@ cr_db = db_interactions.create_database()
 #print(df)
 
 #insert neccessary attributes 
-#inst_attr = db_interactions.insert_attributes( 'w222', ['value', 'value2', 'value3','value4','value5','value6','value7','value8','value9','value10'] )
+#inst_attr = db_interactions.insert_attributes( 'w22', ['value', 'value2', 'value3','value4','value5','value6','value7','value8','value9','value10'] )
 #print(inst_attr)
 
 #check if they were added 
@@ -46,20 +46,23 @@ cr_db = db_interactions.create_database()
 
 
 #get a row from a table
-#get_row = db_interactions.get_row_from_survey('Attributes', 34)
+#get_row = db_interactions.get_row_from_survey('Master_Design', 4005)
 #print(get_row)
+
+
 
 #insert rows into a table
 #you should have uniqe rowid or it will give an error
 #you should have exactly the same number of values as it is in the table columns
 
-# inserted_rows = db_interactions.insert_rows("Attributes", [
-#     [12121, 'Alice', 'Bob', 'Charlie', 33],
-#     [313134, 25, 30, 35, 50],
-#     [231232, 'New York', 'Los Angeles', 'better', 300],
-#     [31212, 'hello', 'whatsup', 'samsung', 'dwada']
-# ])  
+# dataframe1 = [
+#     ['Alice', 'Bob', 'Charlie', 'ee', 'ww','New York', 'Los Angeles', 'Chicago', 'dd', 'aa','New York', 'Los Angeles', 'Chicago', 'dd', 'aa']  
+# ]
+# df = pd.DataFrame(dataframe1)
+# inserted_rows = db_interactions.insert_rows("Master_Design", df)
 # print(inserted_rows)
+
+
 
 
 '''This part doesn't belong to this milestone and we dont need them right now, it's created for the future work'''
