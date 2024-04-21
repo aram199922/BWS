@@ -16,7 +16,7 @@ import pandas as pd
 '''Add the comment sign after runnning the code'''
 
 #creating a database
-#cr_db = db_interactions.create_database()
+cr_db = db_interactions.create_database()
 
 #pushing flat files (in our case master_design) ointo our databse
 #db_interactions.push_flat_file_to_database("master_design.csv", "Master_Design")
@@ -44,12 +44,31 @@ import pandas as pd
 #write a column name, a row or column name you want to replace, and what you want to replace with
 #df5 = db_interactions.update_row_or_column("w222", "value8", "value88")
 
+
+#get a row from a table
+#get_row = db_interactions.get_row_from_survey('Attributes', 34)
+#print(get_row)
+
+#insert rows into a table
+#you should have uniqe rowid or it will give an error
+#you should have exactly the same number of values as it is in the table columns
+
+# inserted_rows = db_interactions.insert_rows("Attributes", [
+#     [12121, 'Alice', 'Bob', 'Charlie', 33],
+#     [313134, 25, 30, 35, 50],
+#     [231232, 'New York', 'Los Angeles', 'better', 300],
+#     [31212, 'hello', 'whatsup', 'samsung', 'dwada']
+# ])  
+# print(inserted_rows)
+
+
+'''This part doesn't belong to this milestone and we dont need them right now, it's created for the future work'''
+
 #currently we dont need this function
 #its may be needed in the future so it needs some upgrade
 #creating a table (with columns)
 #cr_tb = db_interactions.create_table()
 
-'''This part doesn't belong to this milestone and we dont need them right now, it's created for the future work'''
 
 '''
 def insert_survey():
