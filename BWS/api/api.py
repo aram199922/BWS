@@ -21,8 +21,3 @@ async def inserting_attributes(Company: str, Product: str, Attributes: list[str]
     column_name = f"{Company}__{Product}"
     insert_attributes(column_name, Attributes)
     return {"Data inserted successfully"}
-
-# Redirect root URL to /docs
-@app.get("/", include_in_schema=False)
-async def redirect_to_docs():
-    return RedirectResponse(url="/docs")

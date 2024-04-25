@@ -290,6 +290,51 @@ def pandas_to_sql(df, table_name, if_exists='replace'):
     df.to_sql(table_name, db, if_exists=if_exists, index=False)
     db.close()
 
+def create_response_lyov_table():
+    db = sqlite3.connect("testDB.db")
+    c = db.cursor()
+
+    create_table_query = """
+    CREATE TABLE IF NOT EXISTS response_lyov (
+        id INTEGER PRIMARY KEY,
+        user INTEGER,
+        block INTEGER,
+        task INTEGER,
+        attribute TEXT,
+        response INTEGER,
+        age_range TEXT,
+        gender TEXT
+    )
+    """
+    c.execute(create_table_query)
+    db.commit()
+    db.close()
+
+
+def store_response(user, block, task, attributes, best_attribute, worst_attribute, age_range, gender):
+    db = sqlite3.connect("testDB.db")
+    c = db.cursor()
+
+    try:
+        for attribute in attributes:
+            response = 0  # Default response
+            if attribute == best_attribute:
+                response = 1
+            elif attribute == worst_attribute:
+                response = -1
+
+            insert_query = "INSERT INTO response_lyov (user, block, task, attribute, response, age_range, gender) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            c.execute(insert_query, (user, block, task, attribute, response, age_range, gender))
+
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise e
+    finally:
+        c.close()
+        db.close()
+        
+            
 
 #currently we dont need this function
 #its may be needed in the future so its need some upgrade

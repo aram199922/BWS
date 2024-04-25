@@ -5,58 +5,13 @@ import sqlite3
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Depends
 from starlette.responses import RedirectResponse
-from typing import Dict
 from BWS.database.db_interactions import get_row_from_survey
-
+from BWS.database.db_interactions import create_response_lyov_table
+from BWS.database.db_interactions import store_response
 
 app = FastAPI()
-
-def create_task_attributes_table():
-    conn = sqlite3.connect("testDB.db")  # Connecting to SQLite database
-    cursor = conn.cursor()
-
-    create_table_query = """
-    CREATE TABLE IF NOT EXISTS task_attributes (
-        id INTEGER PRIMARY KEY,
-        block INTEGER,
-        task INTEGER,
-        attribute TEXT,
-        response INTEGER,
-        age_range TEXT,
-        gender TEXT,
-        user INTEGER  -- New column for storing unique user numbers
-    )
-    """
-    cursor.execute(create_table_query)
-    conn.commit()
-    conn.close()
-
-def store_task_attributes(block, task, attributes, best_attribute, worst_attribute, age_range, gender, user):
-    conn = sqlite3.connect("testDB.db")  # Connecting to SQLite database
-    cursor = conn.cursor()
-
-    try:
-        for attribute in attributes:
-            response = 0  # Default response
-            if attribute == best_attribute:
-                response = 1
-            elif attribute == worst_attribute:
-                response = -1
-
-            insert_query = "INSERT INTO task_attributes (block, task, attribute, response, age_range, gender, user) VALUES (?, ?, ?, ?, ?, ?, ?)"
-            cursor.execute(insert_query, (block, task, attribute, response, age_range, gender, user))
-
-        conn.commit()
-    except Exception as e:
-        conn.rollback()
-        raise e
-    finally:
-        cursor.close()
-        conn.close()
-
-
 
 current_task = 1  # Initialize current task to 1
 
@@ -75,7 +30,6 @@ gender_options = ["female", "male"]
 # Store respondent's demographic information
 respondent_info = {}
 
-from fastapi import Depends
 
 # Function to set and retrieve the respondent's age range
 def get_age_range():
@@ -84,15 +38,15 @@ def get_age_range():
     return respondent_info["age_range"]
 
 
-@app.post("/user/number", response_model=dict)
-async def store_user_number(user_number: int = Query(..., description="Please provide your unique user number")):
+@app.post("/user/id", response_model=dict)
+async def store_user_id(user_id: int = Query(..., description="Please type an ID")):
     """
-    Store a unique number for each user.
+    Store a unique id for each user.
     """
-    # Store the user number in the respondent_info dictionary
-    respondent_info["user"] = user_number
+    # Store the user id in the respondent_info dictionary
+    respondent_info["user"] = user_id
 
-    return {"message": "User number saved successfully"}
+    return {"message": "User ID saved successfully"}
 
 @app.post("/demographics/age_range", response_model=dict)
 async def select_age_range(age_range: str = Query(..., description="Please select your age range from the options provided above")):
@@ -183,27 +137,13 @@ async def select_task_attributes(task_id: int, best_attribute: str = Query(None)
     if best_attribute not in available_attributes or worst_attribute not in available_attributes:
         raise HTTPException(status_code=400, detail=f"Invalid attribute selection. Task {task_id} does not have the selected attribute(s)")
 
-    # Create table if does not exist
-    create_task_attributes_table()
+    # Create table if it does not exist
+    create_response_lyov_table()
 
     # Store the selected best and worst attributes, along with age range, in the database
     try:
-        store_task_attributes(block=1, task=task_id, attributes=available_attributes, best_attribute=best_attribute, worst_attribute=worst_attribute, age_range=age_range, gender=gender, user=respondent_info.get("user"))
+        store_response(user=respondent_info.get("user"), block=1, task=task_id, attributes=available_attributes, best_attribute=best_attribute, worst_attribute=worst_attribute, age_range=age_range, gender=gender)
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to store attribute response")
 
     return {"task_id": task_id, "best_attribute": best_attribute, "worst_attribute": worst_attribute}
-
-
-# Redirect root URL to /docs
-@app.get("/", include_in_schema=False)
-async def redirect_to_docs():
-    return RedirectResponse(url="/docs")
-
-
-import uvicorn
-import os
-
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)

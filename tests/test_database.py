@@ -64,6 +64,23 @@ cr_db = db_interactions.create_database()
 
 
 
+# Create a table for response_lyov
+# cr_resp_lyov = db_interactions.create_response_lyov_table()
+
+
+# Store values in response_lyov table
+# user = 1
+# block = 1
+# task = 1
+# attributes = ["attribute1", "attribute2", "attribute3"]
+# best_attribute = "attribute1"
+# worst_attribute = "attribute3"
+# age_range = "26-35"
+# gender = "male"
+
+# store_values = db_interactions.store_response(user, block, task, attributes, best_attribute, worst_attribute, age_range, gender)
+
+
 
 '''This part doesn't belong to this milestone and we dont need them right now, it's created for the future work'''
 
