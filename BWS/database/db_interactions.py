@@ -75,6 +75,7 @@ def insert_attributes(column_name, values_list):
 
 
 
+
 def get_attributes(column_name):
     db = sqlite3.connect("testDB.db")
     c = db.cursor()
@@ -120,40 +121,51 @@ def read_table(table_name):
     return df
 
 
+def insert_rows(table_name, df):
+    """
+    Inserts rows into the specified table.
 
-def update_row_or_column(column_name, to_change, new_value):
+    Args:
+    table_name (str): Name of the table to insert rows into.
+    df (DataFrame): Pandas DataFrame containing rows to insert.
+
+    Returns:
+    str: A message indicating the success or failure of the operation.
+    """
     db = sqlite3.connect("testDB.db")
     c = db.cursor()
-
     try:
-        # Check if the table exists, if not, return an error
-        c.execute("CREATE TABLE IF NOT EXISTS Attributes (rowid INTEGER PRIMARY KEY)")
-        c.execute("PRAGMA table_info(Attributes)")
-        columns = [row[1] for row in c.fetchall()]
-
-        # Check if the specified column exists in the table
-        if column_name not in columns:
-            print(f"Column '{column_name}' does not exist in the table.")
+        # Get the number of columns in the table
+        c.execute(f"PRAGMA table_info({table_name})")
+        table_columns = [row[1] for row in c.fetchall()]
+        print("Table Columns:", table_columns)  # Add this line
+        
+        # Check if the number of columns in the DataFrame matches the number of columns in the table
+        print("DataFrame Columns:", df.columns)  # Add this line
+        if len(df.columns) != len(table_columns):
             db.close()
-            return
+            return f"Number of columns in DataFrame ({len(df.columns)}) doesn't match the number of columns in the table ({len(table_columns)})."
 
-        # Check if 'to_change' is a column name
-        if to_change in columns:
-            # Rename the specified column
-            c.execute(f"ALTER TABLE Attributes RENAME COLUMN {to_change} TO {new_value}")
-            print(f"Column '{to_change}' renamed to '{new_value}' successfully.")
-        else:
-            # Update the specified row with the new value
-            c.execute(f"UPDATE Attributes SET {column_name} = ? WHERE {column_name} = ?", (new_value, to_change))
-            print(f"Value '{to_change}' in column '{column_name}' updated to '{new_value}' successfully.")
 
+        # Convert all values in the DataFrame to strings
+        df = df.applymap(str)
+
+        # Check for non-convertible values
+        for column in df.columns:
+            if not df[column].apply(lambda x: isinstance(x, str)).all():
+                db.close()
+                return f"Non-convertible values found in column '{column}'."
+
+        # Insert data into the specified table
+        c.executemany(f"INSERT INTO {table_name} VALUES ({','.join(['?' for _ in range(len(table_columns))])})", df.values.tolist())
         db.commit()
         db.close()
-        return
-    
+        return "Rows inserted successfully."
     except sqlite3.Error as e:
-        print(f"Error updating row or column: {e}")
+        db.rollback()
         db.close()
+        return f"Error inserting rows into table {table_name}: {e}"
+
 
 
 
@@ -188,14 +200,13 @@ def remove_column_or_row(column_name, to_remove):
         print(f"Error removing '{to_remove}': {e}")
 
 
-
-def get_row_from_survey(table_name, rowid):
+def get_row_from_survey(table_name, index):
     """
-    Retrieves a row from the specified table based on its rowid.
+    Retrieves a row from the specified table based on its basic index.
 
     Args:
     table_name (str): Name of the table to retrieve the row from.
-    rowid (int): The rowid of the row to retrieve.
+    index (int): The index of the row to retrieve (0-based).
 
     Returns:
     tuple: A tuple containing the values of the row retrieved.
@@ -203,14 +214,14 @@ def get_row_from_survey(table_name, rowid):
     db = sqlite3.connect("testDB.db")
     c = db.cursor()
     try:
-        # Execute query to fetch the row based on rowid
-        c.execute(f"SELECT * FROM {table_name} WHERE rowid=?", (rowid,))
+        # Execute query to fetch the row based on index
+        c.execute(f"SELECT * FROM {table_name} LIMIT 1 OFFSET ?", (index,))
         row = c.fetchone()
         db.close()
         if row:
             return row  # Return tuple containing row values
         else:
-            print(f"No row found with rowid {rowid} in table {table_name}")
+            print(f"No row found at index {index} in table {table_name}")
             return None
     except sqlite3.Error as e:
         print(f"Error fetching row from table {table_name}: {e}")
@@ -219,13 +230,13 @@ def get_row_from_survey(table_name, rowid):
 
 
 
-def insert_rows(table_name, data):
+def insert_rows(table_name, df):
     """
     Inserts rows into the specified table.
 
     Args:
     table_name (str): Name of the table to insert rows into.
-    data (list): List of lists or tuples representing rows to insert.
+    df (DataFrame): Pandas DataFrame containing rows to insert.
 
     Returns:
     str: A message indicating the success or failure of the operation.
@@ -233,30 +244,35 @@ def insert_rows(table_name, data):
     db = sqlite3.connect("testDB.db")
     c = db.cursor()
     try:
+        # Check if the table exists
+        c.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name=?;", (table_name,))
+        table_exists = c.fetchone()
+        if not table_exists:
+            db.close()
+            return f"Table '{table_name}' does not exist."
+
         # Get the number of columns in the table
         c.execute(f"PRAGMA table_info({table_name})")
         table_columns = [row[1] for row in c.fetchall()]
-        
-        # Check if the number of columns in the DataFrame matches the number of columns in the table
-        for row_data in data:
-            if len(row_data) != len(table_columns):
-                db.close()
-                return f"Number of columns in DataFrame ({len(row_data)}) doesn't match the number of columns in the table ({len(table_columns)})."
 
+        # Check if the number of columns in the DataFrame matches the number of columns in the table
+        if len(df.columns) != len(table_columns):
+            db.close()
+            return f"Number of columns in DataFrame ({len(df.columns)}) doesn't match the number of columns in the table ({len(table_columns)})."
+
+        # Convert all values in the DataFrame to strings
+        df = df.applymap(str)
+
+        # Construct the SQL query dynamically based on the number of columns
+        placeholders = ','.join(['?'] * len(table_columns))
+        query = f"INSERT INTO {table_name} VALUES ({placeholders})"
+        
         # Insert data into the specified table
-        c.executemany(f"INSERT INTO {table_name} VALUES ({','.join(['?' for _ in range(len(table_columns))])})", data)
+        c.executemany(query, df.values.tolist())
         db.commit()
         db.close()
         return "Rows inserted successfully."
-    except sqlite3.ProgrammingError as e:
-        if "Incorrect number of bindings" in str(e):
-            db.close()
-            return f"Number of columns in DataFrame ({len(row_data)}) doesn't match the number of columns in the table ({len(table_columns)})."
-        else:
-            db.rollback()
-            db.close()
-            return f"Error inserting rows into table {table_name}: {e}"
-    except Exception as e:
+    except sqlite3.Error as e:
         db.rollback()
         db.close()
         return f"Error inserting rows into table {table_name}: {e}"
