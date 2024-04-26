@@ -6,7 +6,7 @@ sys.path.insert(0, current_directory)
 
 from fastapi import FastAPI, HTTPException, Query
 from BWS.database.db_interactions import get_row_from_survey
-from BWS.database.db_interactions import create_response_lyov_table
+from BWS.database.db_interactions import create_response_iphone_table
 from BWS.database.db_interactions import store_response
 
 app = FastAPI()
@@ -136,7 +136,7 @@ async def select_task_attributes(task_id: int, best_attribute: str = Query(None)
         raise HTTPException(status_code=400, detail=f"Invalid attribute selection. Task {task_id} does not have the selected attribute(s)")
 
     # Create table if it does not exist
-    create_response_lyov_table()
+    create_response_iphone_table()
 
     # Store the selected best and worst attributes, along with user_id, age range, gender in the database
     try:

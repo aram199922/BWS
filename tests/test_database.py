@@ -64,11 +64,11 @@ cr_db = db_interactions.create_database()
 
 
 
-# Create a table for response_lyov
-# cr_resp_lyov = db_interactions.create_response_lyov_table()
+# Create a table for response_Apple__Iphone
+# cr_resp_iphone = db_interactions.create_response_iphone_table()
 
 
-# Store values in response_lyov table
+# Store values in response_Apple__Iphone table
 # user = 1
 # block = 1
 # task = 1
