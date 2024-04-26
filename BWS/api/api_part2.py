@@ -1,12 +1,10 @@
 import os
 import sys
-import sqlite3
 
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
 
-from fastapi import FastAPI, HTTPException, Query, Depends
-from starlette.responses import RedirectResponse
+from fastapi import FastAPI, HTTPException, Query
 from BWS.database.db_interactions import get_row_from_survey
 from BWS.database.db_interactions import create_response_lyov_table
 from BWS.database.db_interactions import store_response
@@ -140,10 +138,11 @@ async def select_task_attributes(task_id: int, best_attribute: str = Query(None)
     # Create table if it does not exist
     create_response_lyov_table()
 
-    # Store the selected best and worst attributes, along with age range, in the database
+    # Store the selected best and worst attributes, along with user_id, age range, gender in the database
     try:
         store_response(user=respondent_info.get("user"), block=1, task=task_id, attributes=available_attributes, best_attribute=best_attribute, worst_attribute=worst_attribute, age_range=age_range, gender=gender)
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to store attribute response")
 
     return {"task_id": task_id, "best_attribute": best_attribute, "worst_attribute": worst_attribute}
+

@@ -1,5 +1,4 @@
 import uvicorn
-import os
 from starlette.responses import RedirectResponse
 
 
