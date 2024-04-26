@@ -80,6 +80,8 @@ async def select_gender(gender: str = Query(..., description="Please select your
     return {"message": "Gender saved successfully"}
 
 
+from typing import List
+
 @app.get("/block/tasks", response_model=dict)
 async def get_current_task():
     """
@@ -87,22 +89,21 @@ async def get_current_task():
     """
     global current_task
 
+    if current_task > 10:
+        return {"message": "Thank you for your feedback!"}
+
     # Retrieve attributes for the current task from the survey table
-    row = get_row_from_survey("survey_lyov", current_task - 1)  # Index is 0-based
+    row = get_row_from_survey("survey_Apple__Iphone", current_task - 1)  # Index is 0-based
     if not row:
         raise HTTPException(status_code=404, detail=f"No attributes found for Task {current_task}")
 
     # Extract attributes from the row
     attributes = row[2:]
 
-    # Construct the list of attributes with options for the user
-    attribute_options = {f"Attribute {i+1}": attribute for i, attribute in enumerate(attributes)}
-
-    # Prepare response with task ID, attributes, and attribute options
+    # Prepare response with task ID and attributes
     response = {
         "task_id": current_task,
-        "attributes": attributes,
-        "attribute_options": attribute_options
+        "attributes": {attribute for i, attribute in enumerate(attributes)}
     }
 
     # Automatically move to the next task for the next request
@@ -124,7 +125,7 @@ async def select_task_attributes(task_id: int, best_attribute: str = Query(None)
         raise HTTPException(status_code=400, detail=f"Invalid task ID. Expected: {current_task - 1}")
     
     # Retrieve attributes for the specified task from the survey table
-    row = get_row_from_survey("survey_lyov", task_id - 1)  # Index is 0-based
+    row = get_row_from_survey("survey_Apple__Iphone", task_id - 1)  # Index is 0-based
     if not row:
         raise HTTPException(status_code=404, detail=f"No attributes found for Task {task_id}")
     
@@ -137,7 +138,7 @@ async def select_task_attributes(task_id: int, best_attribute: str = Query(None)
 
     # Create table if it does not exist
     create_response_iphone_table()
-
+    
     # Store the selected best and worst attributes, along with user_id, age range, gender in the database
     try:
         store_response(user=respondent_info.get("user"), block=1, task=task_id, attributes=available_attributes, best_attribute=best_attribute, worst_attribute=worst_attribute, age_range=age_range, gender=gender)
