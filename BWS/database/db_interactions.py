@@ -290,12 +290,12 @@ def pandas_to_sql(df, table_name, if_exists='replace'):
     df.to_sql(table_name, db, if_exists=if_exists, index=False)
     db.close()
 
-def create_response_lyov_table():
+def create_response_iphone_table():
     db = sqlite3.connect("testDB.db")
     c = db.cursor()
 
     create_table_query = """
-    CREATE TABLE IF NOT EXISTS response_lyov (
+    CREATE TABLE IF NOT EXISTS response_Apple__Iphone (
         id INTEGER PRIMARY KEY,
         user INTEGER,
         block INTEGER,
@@ -323,7 +323,7 @@ def store_response(user, block, task, attributes, best_attribute, worst_attribut
             elif attribute == worst_attribute:
                 response = -1
 
-            insert_query = "INSERT INTO response_lyov (user, block, task, attribute, response, age_range, gender) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            insert_query = "INSERT INTO response_Apple__Iphone (user, block, task, attribute, response, age_range, gender) VALUES (?, ?, ?, ?, ?, ?, ?)"
             c.execute(insert_query, (user, block, task, attribute, response, age_range, gender))
 
         db.commit()
