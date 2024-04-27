@@ -82,3 +82,109 @@ def design_creation(attributes):
     #     survey_design[f"Block {block}"] = block_data
     return final_design
 
+def output_1_simple_demographic(data):
+    result_df = pd.DataFrame()
+    non_demographic = ['Respondent_ID', 'Attribute', 'Block', 'Task', 'Response', 'Importance']
+    
+    simple_demographic_data = data.drop_duplicates(subset=['Respondent_ID'])
+    
+    for c in simple_demographic_data.columns:
+        if c not in non_demographic and simple_demographic_data[c].dtype == 'object':
+            group_counts = pd.DataFrame(simple_demographic_data.groupby(c)['Respondent_ID'].count())
+            group_counts.reset_index(inplace=True)
+            group_counts.rename(columns={c: 'Category', 'Respondent_ID': 'Count'}, inplace=True)
+            group_counts['Demographic']=c
+            result_df = pd.concat([result_df, group_counts], axis=0)
+    
+    return result_df
+
+def ae_mln(data, prob = 0.95):
+    """
+    Calculate the analytical estimate for the MLN for a given dataframe.
+
+    Parameters:
+    data (pandas.DataFrame): The input dataframe.
+    CI (float): Optional confidence interval (default = 0.95).
+
+    Returns:
+    pandas.DataFrame: Contains Total, Best, Worst, Neutral, b, se, lb, ub, choice_p.
+    """
+    # Calculate the degrees of freedom (sample Size - 1)
+    df = data["Respondent_ID"].nunique() - 1
+
+    # Aggregate data
+    aggr_data = data.groupby('Attribute')['Response'].agg(['sum', 'count']).reset_index()
+
+    # Count positive, negative, and neutral responses
+    counts = data.groupby(['Attribute', 'Response']).size().unstack(fill_value=0)
+    aggr_data['Best'] = counts[1].values
+    aggr_data['Worst'] = counts[-1].values
+    aggr_data['Neutral'] = counts[0].values
+
+    # Calculate pj: (Nt + Np - Nn) / (2 * Nt)
+    aggr_data['pj'] = (aggr_data['sum'] + aggr_data['count']) / (2 * aggr_data['count'])
+
+    # Calculate bj = ln(pj / (1 - pj))
+    aggr_data['b'] = np.log(aggr_data['pj'] / (1 - aggr_data['pj']))
+
+    # Calculate the choice probabilities
+    aggr_data['choice_p'] = np.exp(aggr_data['b']) / np.sum(np.exp(aggr_data['b']))
+
+    # Calculate the standard error of bj: sqrt(1 / (pj * (1 - pj) * 2 * count))
+    aggr_data['se'] = np.sqrt(1 / (aggr_data['pj'] * (1 - aggr_data['pj']) * 2 * aggr_data['count']))
+
+    # Calculate the lower and upper bound for the given confidence level
+    aggr_data['lb'] = aggr_data['b'] - t.ppf(1 - (1 - prob) / 2, df) * aggr_data['se']
+    aggr_data['ub'] = aggr_data['b'] + t.ppf(1 - (1 - prob) / 2, df) * aggr_data['se']
+
+    # Drop unnecessary columns
+    aggr_data.drop(['sum', 'pj'], axis=1, inplace=True)
+
+    # Rename columns
+    aggr_data.rename(columns={'count': 'Total'}, inplace=True)
+
+    return aggr_data
+
+def output_2_general_importance_plot_df(data):
+    """Return the json for the general importance plot
+    
+    Parameters:
+    data (pandas.DataFrame): The input dataframe. 
+    The data should be only for the General part (rather than the Company)
+    
+    Returns:
+    json: The json data for the general importance plot
+    """
+    res1 = ae_mln(data)
+    
+    # if [lb, ub] is contained 0 then sig = "", if did not contain 0 then sig = "**"
+    res1['sig'] = np.where((res1['lb'] <= 0) & (res1['ub'] >= 0), '', '**')
+    # remove the following columns from res1
+    res1.drop(['Total', 'Best', 'Worst', 'Neutral', 'se'], axis=1, inplace=True)
+    # Change all column names
+    res1.rename(columns={'b': 'General_Preference_of_Attributes',
+                        'choice_p': 'General_Importance',
+                        'lb': 'Lower_Bound',
+                        'ub': 'Upper_Bound',
+                        'sig': 'General_Significance'
+                       }, inplace=True)
+    
+    return res1
+
+def output_3_4_importance_by_demographic(data):
+    static_columns = ['Respondent_ID', 'Attribute', 'Block', 'Task', 'Response', 'Importance']
+    
+    result_columns = ['Attribute','General_Importance','General_Significance','Demographic', 'Category']
+    result = pd.DataFrame(columns=result_columns)
+    for c in data.columns:
+        if c not in static_columns and data[c].dtype == 'object':    
+            unique_values_list = data[c].unique().tolist()
+            for i in unique_values_list:
+                data_subset = data[data[c] == i]
+                res_subset = output_2_general_importance_plot_df(data_subset)
+                for j in res_subset:
+                    new_row = {'Attribute': j['Attribute'], 'General_Importance': j['General_Importance'],'General_Significance': j['General_Significance'],'Demographic': c,'Category' : i}
+                    new_row_df = pd.DataFrame([new_row])
+                    result = pd.concat([result, new_row_df], ignore_index=True)
+    return result
+

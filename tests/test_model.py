@@ -27,3 +27,7 @@ analysis.push_survey_design('Apple__Iphone', survey_design)
 #df = db_interactions.sql_to_pandas('SELECT * from survey_lyov')
 #print(df.head())
 
+#analysis.push_analysis('Apple__Iphone') 
+ 
+#df = db_interactions.read_table("response_Apple__Iphone") 
+#print(df)

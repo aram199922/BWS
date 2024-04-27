@@ -4,7 +4,7 @@ import sys
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
 
-from BWS.model.__init__ import design_creation
+from BWS.model.__init__ import design_creation, output_1_simple_demographic
 from BWS.database import db_interactions
 
 def get_survey_design(column_name):
@@ -40,4 +40,11 @@ def get_survey_design(column_name):
 def push_survey_design(column_name,survey_design):
     table_name = f"survey_{column_name}"
     db_interactions.pandas_to_sql(survey_design, table_name)
+    return
+
+def push_analysis1(product_name): 
+    data = db_interactions.read_table(f"response_{product_name}") 
+    data.drop(columns=['id'], inplace=True) 
+    result = output_1_simple_demographic(data) 
+    db_interactions.pandas_to_sql(result, f"analysis1_{product_name}") 
     return
