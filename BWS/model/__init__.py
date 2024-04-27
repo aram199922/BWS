@@ -1,5 +1,7 @@
 import os
 import sys
+from scipy.stats import t
+import numpy as np
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
 
@@ -182,8 +184,8 @@ def output_3_4_importance_by_demographic(data):
             for i in unique_values_list:
                 data_subset = data[data[c] == i]
                 res_subset = output_2_general_importance_plot_df(data_subset)
-                for j in res_subset:
-                    new_row = {'Attribute': j['Attribute'], 'General_Importance': j['General_Importance'],'General_Significance': j['General_Significance'],'Demographic': c,'Category' : i}
+                for index, row in res_subset.iterrows(): 
+                    new_row = {'Attribute': row['Attribute'], 'General_Importance': row['General_Importance'],'General_Significance': row['General_Significance'],'Demographic': c,'Category' : i}
                     new_row_df = pd.DataFrame([new_row])
                     result = pd.concat([result, new_row_df], ignore_index=True)
     return result

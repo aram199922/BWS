@@ -1,10 +1,12 @@
 import os
 import sys
+import numpy as np
+import pandas as pd
 
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
 
-from BWS.model.__init__ import design_creation, output_1_simple_demographic
+from BWS.model.__init__ import design_creation, output_1_simple_demographic, output_2_general_importance_plot_df, output_3_4_importance_by_demographic
 from BWS.database import db_interactions
 
 def get_survey_design(column_name):
@@ -48,3 +50,15 @@ def push_analysis1(product_name):
     result = output_1_simple_demographic(data) 
     db_interactions.pandas_to_sql(result, f"analysis1_{product_name}") 
     return
+
+def push_analysis2(product_name): 
+    data = db_interactions.read_table(f"response_{product_name}") 
+    data.drop(columns=['id'], inplace=True) 
+    result = output_2_general_importance_plot_df(data) 
+    db_interactions.pandas_to_sql(result, f"analysis2_{product_name}") 
+ 
+def push_analysis3(product_name): 
+    data = db_interactions.read_table(f"response_{product_name}") 
+    data.drop(columns=['id'], inplace=True) 
+    result = output_3_4_importance_by_demographic(data) 
+    db_interactions.pandas_to_sql(result, f"analysis3_{product_name}")

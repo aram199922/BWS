@@ -31,3 +31,7 @@ analysis.push_survey_design('Apple__Iphone', survey_design)
  
 #df = db_interactions.read_table("response_Apple__Iphone") 
 #print(df)
+
+#analysis.push_analysis1('Apple__Iphone')  
+#analysis.push_analysis2('Apple__Iphone') 
+analysis.push_analysis3('Apple__Iphone')
