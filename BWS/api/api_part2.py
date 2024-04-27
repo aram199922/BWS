@@ -146,4 +146,3 @@ async def select_task_attributes(task_id: int, best_attribute: str = Query(None)
         raise HTTPException(status_code=500, detail="Failed to store attribute response")
 
     return {"task_id": task_id, "best_attribute": best_attribute, "worst_attribute": worst_attribute}
-

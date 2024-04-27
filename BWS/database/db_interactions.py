@@ -199,6 +199,35 @@ def remove_column_or_row(column_name, to_remove):
     except sqlite3.Error as e:
         print(f"Error removing '{to_remove}': {e}")
 
+'''
+def get_row_from_survey(table_name, index):
+    """
+    Retrieves a row from the specified table based on its basic index.
+
+    Args:
+    table_name (str): Name of the table to retrieve the row from.
+    index (int): The index of the row to retrieve (0-based).
+
+    Returns:
+    tuple: A tuple containing the values of the row retrieved.
+    """
+    db = sqlite3.connect("testDB.db")
+    c = db.cursor()
+    try:
+        # Execute query to fetch the row based on index
+        c.execute(f"SELECT * FROM {table_name} LIMIT 1 OFFSET ?", (index,))
+        row = c.fetchone()
+        db.close()
+        if row:
+            return row  # Return tuple containing row values
+        else:
+            print(f"No row found at index {index} in table {table_name}")
+            return None
+    except sqlite3.Error as e:
+        print(f"Error fetching row from table {table_name}: {e}")
+        db.close()
+        return None
+'''
 
 def get_row_from_survey(table_name, index):
     """
@@ -227,8 +256,6 @@ def get_row_from_survey(table_name, index):
         print(f"Error fetching row from table {table_name}: {e}")
         db.close()
         return None
-
-
 
 def insert_rows(table_name, df):
     """
@@ -297,13 +324,13 @@ def create_response_iphone_table():
     create_table_query = """
     CREATE TABLE IF NOT EXISTS response_Apple__Iphone (
         id INTEGER PRIMARY KEY,
-        user INTEGER,
-        block INTEGER,
-        task INTEGER,
-        attribute TEXT,
-        response INTEGER,
-        age_range TEXT,
-        gender TEXT
+        Respondent_ID INTEGER,
+        Attribute TEXT,
+        Block INTEGER,
+        Task INTEGER,
+        Response INTEGER,
+        Age_Range TEXT,
+        Gender TEXT
     )
     """
     c.execute(create_table_query)
@@ -311,20 +338,20 @@ def create_response_iphone_table():
     db.close()
 
 
-def store_response(user, block, task, attributes, best_attribute, worst_attribute, age_range, gender):
+def store_response(Respondent_ID, Attributes, Best_Attribute, Worst_Attribute, Block, Task, Age_Range, Gender):
     db = sqlite3.connect("testDB.db")
     c = db.cursor()
 
     try:
-        for attribute in attributes:
-            response = 0  # Default response
-            if attribute == best_attribute:
-                response = 1
-            elif attribute == worst_attribute:
-                response = -1
+        for Attribute in Attributes:
+            Response = 0
+            if Attribute == Best_Attribute:
+                Response = 1
+            elif Attribute == Worst_Attribute:
+                Response = -1
 
-            insert_query = "INSERT INTO response_Apple__Iphone (user, block, task, attribute, response, age_range, gender) VALUES (?, ?, ?, ?, ?, ?, ?)"
-            c.execute(insert_query, (user, block, task, attribute, response, age_range, gender))
+            insert_query = "INSERT INTO response_Apple__Iphone (Respondent_ID, Attribute, Block, Task, Response, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            c.execute(insert_query, (Respondent_ID, Attribute, Block, Task, Response, Age_Range, Gender))
 
         db.commit()
     except Exception as e:

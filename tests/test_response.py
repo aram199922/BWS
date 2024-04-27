@@ -27,10 +27,10 @@ genders = ["male", "female"]
 user_info = {}
 
 # Generate age range and gender for each user
-for user in range(1, 31):
-    age_range = random.choice(age_ranges)
-    gender = random.choice(genders)
-    user_info[user] = (age_range, gender)
+for Respondent_ID in range(1, 31):
+    Age_Range = random.choice(age_ranges)
+    Gender = random.choice(genders)
+    user_info[Respondent_ID] = (Age_Range, Gender)
 
 # Define function to randomly generate responses
 def generate_responses():
@@ -40,19 +40,19 @@ def generate_responses():
     return responses
 
 # Iterate over users, blocks, and tasks to generate responses
-for user in range(1, 31):
+for Respondent_ID in range(1, 31):
     # Determine the block number based on the current user
-    block = (user - 1) % 10 + 1
-    for task in range(1, 11):
-        age_range, gender = user_info[user]  # Get age range and gender for this user
+    Block = (Respondent_ID - 1) % 10 + 1
+    for Task in range(1, 11):
+        Age_Range, Gender = user_info[Respondent_ID]  # Get age range and gender for this user
         # Generate responses for attributes
         responses = generate_responses()
         # Retrieve attributes from survey_Apple__Iphone for the given user and block
-        c.execute("SELECT block, task, item1, item2, item3, item4, item5 FROM survey_Apple__Iphone WHERE block=? AND task=?", (block, task,))
+        c.execute("SELECT block, task, item1, item2, item3, item4, item5 FROM survey_Apple__Iphone WHERE block=? AND task=?", (Block, Task,))
         attributes = c.fetchone()
         # Insert responses into response_Apple__Iphone table
-        for i, attribute in enumerate(attributes[2:]):  # Skip block and task columns
-            c.execute("INSERT INTO response_Apple__Iphone (user, block, task, attribute, response, age_range, gender) VALUES (?, ?, ?, ?, ?, ?, ?)", (user, block, task, attribute, responses[i], age_range, gender))
+        for i, Attribute in enumerate(attributes[2:]):  # Skip block and task columns
+            c.execute("INSERT INTO response_Apple__Iphone (Respondent_ID, Attribute, Block, Task, Response, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?, ?)", (Respondent_ID, Attribute, Block, Task, responses[i], Age_Range, Gender))
 
 # Commit changes and close connection
 db.commit()
