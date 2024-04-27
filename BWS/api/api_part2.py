@@ -23,7 +23,7 @@ age_ranges = {
 }
 
 # Define gender options
-gender_options = ["female", "male"]
+genders = ["female", "male"]
 
 # Store respondent's demographic information
 respondent_info = {}
@@ -36,18 +36,18 @@ def get_age_range():
     return respondent_info["age_range"]
 
 
-@app.post("/user/id", response_model=dict)
-async def store_user_id(user_id: int = Query(..., description="Please type an ID")):
+@app.post("/Respondent ID", response_model=dict)
+async def store_respondent_id(Respondent_ID: int = Query(..., description="Please type an ID")):
     """
-    Store a unique id for each user.
+    Store a unique ID for each user.
     """
     # Store the user id in the respondent_info dictionary
-    respondent_info["user"] = user_id
+    respondent_info["Respondent_ID"] = Respondent_ID
 
-    return {"message": "User ID saved successfully"}
+    return {"message": "Respondent ID saved successfully"}
 
 @app.post("/demographics/age_range", response_model=dict)
-async def select_age_range(age_range: str = Query(..., description="Please select your age range from the options provided above")):
+async def select_age_range(Age_Range: str = Query(..., description="Please select your age range from the options provided above")):
     """
     Please select your age range:
     - Under 18: <18,
@@ -56,31 +56,29 @@ async def select_age_range(age_range: str = Query(..., description="Please selec
     - 36-45: 36-45,
     - Above 45: >45
     """
-    if age_range not in age_ranges.values():
+    if Age_Range not in age_ranges.values():
         raise HTTPException(status_code=400, detail="Invalid age range selected")
 
     # Store respondent's age range
-    respondent_info["age_range"] = age_range
+    respondent_info["age_range"] = Age_Range
 
     return {"message": "Age range saved successfully"}
 
 @app.post("/demographics/gender", response_model=dict)
-async def select_gender(gender: str = Query(..., description="Please select your gender")):
+async def select_gender(Gender: str = Query(..., description="Please select your gender")):
     """
     Gender:
     - Female
     - Male
     """
-    if gender.lower() not in gender_options:
+    if Gender.lower() not in genders:
         raise HTTPException(status_code=400, detail="Invalid gender selected")
 
     # Store respondent's gender
-    respondent_info["gender"] = gender.lower()
+    respondent_info["gender"] = Gender.lower()
 
     return {"message": "Gender saved successfully"}
 
-
-from typing import List
 
 @app.get("/block/tasks", response_model=dict)
 async def get_current_task():
@@ -103,7 +101,7 @@ async def get_current_task():
     # Prepare response with task ID and attributes
     response = {
         "task_id": current_task,
-        "attributes": {attribute for i, attribute in enumerate(attributes)}
+        "attributes": {Attribute for i, Attribute in enumerate(attributes)}
     }
 
     # Automatically move to the next task for the next request
@@ -117,8 +115,8 @@ async def select_task_attributes(task_id: int, best_attribute: str = Query(None)
     """
     Allow users to select best and worst attributes for the current task.
     """
-    age_range = get_age_range()
-    gender = respondent_info.get("gender")
+    Age_Range = get_age_range()
+    Gender = respondent_info.get("gender")
 
     # Check if task_id matches the expected current task
     if task_id != current_task - 1:
@@ -139,9 +137,9 @@ async def select_task_attributes(task_id: int, best_attribute: str = Query(None)
     # Create table if it does not exist
     create_response_iphone_table()
     
-    # Store the selected best and worst attributes, along with user_id, age range, gender in the database
+    # Store the selected best and worst attributes, along with Respondent ID, Age Range, Gender in the database
     try:
-        store_response(user=respondent_info.get("user"), block=1, task=task_id, attributes=available_attributes, best_attribute=best_attribute, worst_attribute=worst_attribute, age_range=age_range, gender=gender)
+        store_response(Respondent_ID=respondent_info.get("Respondent_ID"), Block=1, Task=task_id, Attributes=available_attributes, Best_Attribute=best_attribute, Worst_Attribute=worst_attribute, Age_Range=Age_Range, Gender=Gender)
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to store attribute response")
 
