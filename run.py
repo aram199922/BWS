@@ -3,7 +3,7 @@ from starlette.responses import RedirectResponse
 
 
 # Run this file
-from BWS.api.api import app
+from BWS.api import app
 
 # Comment the previous line, uncomment the next line and run
 # from BWS.api.api_part2 import app

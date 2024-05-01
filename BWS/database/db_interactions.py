@@ -7,6 +7,10 @@ sys.path.insert(0, current_directory)
 import sqlite3
 import pandas as pd
 
+
+class SqlHandle:
+    pass
+
 def create_database():
     if not os.path.exists("testDB.db"):
         # Just connect to the database without creating any tables
