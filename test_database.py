@@ -1,9 +1,8 @@
-import os
-import sys
+# import os
+# import sys
 
-current_directory = os.getcwd()
-sys.path.insert(0, current_directory)
-
+# current_directory = os.getcwd()
+# sys.path.insert(0, current_directory)
 from BWS.database import db_interactions
 import pandas as pd
 

@@ -1,9 +1,3 @@
-import os
-import sys
-
-current_directory = os.getcwd()
-sys.path.insert(0, current_directory)
-
 import sqlite3
 import random
 from BWS.database.db_interactions import create_response_iphone_table
