@@ -5,15 +5,18 @@ from ..database.db_interactions import SqlHandle
 
 inst = SqlHandle()
 
-def get_survey_design(column_name):
-    """
-    Retrieve the specified column from the database and create the design.
+def get_survey_design(column_name:str)->pd.DataFrame:
+    """Getting SurveyDesign
 
-    Parameters:
-    - column_name: The name of the column to retrieve.
+    Examples:
+        >>> from BWS.model.analysis import get_survey_design
+        >>> get_survey_design("Cisco_Router")
+
+    Args:
+        column_name (str): The companie's product for which we want to create survey design
 
     Returns:
-    - survey_design: A dataframe of the specfic product survey design.
+        pd.DataFrame: Dataframe containing the structure of the survey (how it will be conducted)
     """
     # Assuming the column name is already sanitized
     column_data = inst.get_attributes(column_name)
@@ -35,7 +38,17 @@ def get_survey_design(column_name):
 
     return survey_design
 
-def push_survey_design(column_name,survey_design):
+def push_survey_design(column_name:str,survey_design:pd.DataFrame):
+    """Pushing the Survey Design into the database
+
+    Examples:
+        >>> from BWS.model.analysis import push_survey_design, get_survey_design
+        >>> push_survey_design("Cisco_Router", get_survey_design("Cisco_Router"))
+
+    Args:
+        column_name (str): The companie's product
+        survey_design (pd.DataFrame): Dataframe containing the structure of the survey (how it will be conducted)
+    """
     table_name = f"survey_{column_name}"
     inst.pandas_to_sql(survey_design, table_name)
     return

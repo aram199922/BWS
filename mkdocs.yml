@@ -1,1 +1,18 @@
-site_name: My Docs
+site_name: BWS Docs
+
+nav:
+  - Home: index.md
+  - Addtion: add.md
+  - API: API.md
+  - SQL: SQL.md
+  - Modelling: Model.md
+
+
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+
+theme: readthedocs

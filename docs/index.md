@@ -1,17 +1,20 @@
-# Welcome to MkDocs
+# Welcome to myBWS
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## BWS
+Tool for conducting and analyzing best-worst scaling surveys
+### The link of the package to pypi.org
+https://pypi.org/project/myBWS/
 
-## Commands
+### Setup Repository
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+Open new bash terminal (you need to have bash installed)
+Follow the steps:
+1. Create virtual environment:
+$ python -m venv venv
+2. Activate the virtual environment:
+Windows: $ source ./venv/Scripts/activate
+MacOS/Linux: $ venv/bin/activate
+3. Install all packages and dependencies
+$ pip install -r requirements.txt
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+Ready to use!!!
