@@ -1,6 +1,4 @@
-# Welcome to myBWS
-
-This is a developed Python package for conducting and analysing best-worst scaling surveys. (Another familiar term for the surveys would be Max-Diff surveys)
+# Welcome to MkDocs
 
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
