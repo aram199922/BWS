@@ -1,6 +1,6 @@
 import uvicorn
 from starlette.responses import RedirectResponse
-
+from BWS.database.db_interactions import SqlHandle
 
 # Run this file
 # from BWS.api import app
@@ -12,6 +12,9 @@ from starlette.responses import RedirectResponse
 # from BWS.api.api_update import app
 
 from BWS.api.part2_test import app
+Inst2 = SqlHandle()
+print(Inst2.create_database())
+Inst2.close()
 
 
 # Redirect root URL to /docs

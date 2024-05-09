@@ -27,7 +27,7 @@ nTs = 'number_of_tasks'
 nIt = 'number_of_items'
 # Number of the overall attributes
 nAttr = 'number_of_attributes'
-
+inst3= db_interactions.SqlHandle()
 
 def design_creation(attributes):
     """
@@ -39,7 +39,7 @@ def design_creation(attributes):
     Returns:
     json: json file of the survey.
     """
-    master_design = db_interactions.read_table('Master_Design')
+    master_design = inst3.read_table('Master_Design')
 
     # Number of attributes.
     attribute_count = len(set(attributes))
