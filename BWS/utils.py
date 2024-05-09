@@ -1,7 +1,7 @@
 import logging
 import os
 from .logger import CustomFormatter
-from .database import db_interactions
+from .database import SqlHandle
 import pandas as pd
 from scipy.stats import t
 import numpy as np
@@ -27,7 +27,8 @@ nTs = 'number_of_tasks'
 nIt = 'number_of_items'
 # Number of the overall attributes
 nAttr = 'number_of_attributes'
-inst3= db_interactions.SqlHandle()
+
+inst3= SqlHandle()
 
 def design_creation(attributes):
     """

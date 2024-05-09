@@ -1,5 +1,4 @@
 from BWS.model import analysis
-from BWS.database import db_interactions
 
 # # Adding attributes column
 # # db_interactions.insert_attributes('lyov',["ram","vam","sam","kam","lam","oam","pam","zam","pip","zip","lip"])
