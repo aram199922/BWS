@@ -1,4 +1,4 @@
 from .analysis import *
 from ..utils import *
-from ..database import SqlHandle
+from ..database.db_interactions import SqlHandle
 

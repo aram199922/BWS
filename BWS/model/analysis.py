@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from .. import utils
-from ..database import SqlHandle
+from ..database.db_interactions import SqlHandle
 
 inst = SqlHandle()
 

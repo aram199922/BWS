@@ -1,7 +1,7 @@
 import logging
 import os
 from .logger import CustomFormatter
-from .database import SqlHandle
+from .database.db_interactions import SqlHandle
 import pandas as pd
 from scipy.stats import t
 import numpy as np
