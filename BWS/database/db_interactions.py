@@ -4,6 +4,7 @@ import sqlite3
 import pandas as pd
 import logging
 from ..logger import *
+from BWS.api.main import app
 
 # current_directory = os.getcwd()
 # sys.path.insert(0, current_directory)
@@ -206,57 +207,65 @@ class SqlHandle:
             print(f"Error removing '{to_remove}': {e}")
             logger.error('Error while trying to remove the specifed column/row')
             self.close()
+    
 
-
-    def get_row_from_survey(self, table_name, index):
+    def get_row_from_survey(self, table_name, index, block):
         """
-        Retrieves a row from the specified table based on its basic index.
+        Retrieves a row from the specified table based on its basic index and block.
 
         Args:
         table_name (str): Name of the table to retrieve the row from.
         index (int): The index of the row to retrieve (0-based).
+        block (int): The block number.
 
         Returns:
         tuple: A tuple containing the values of the row retrieved.
         """
         try:
-            # Execute query to fetch the row based on index
-            self.cursor.execute(f"SELECT * FROM {table_name} LIMIT 1 OFFSET ?", (index,))
+        # Execute query to fetch the row based on index and block
+            self.cursor.execute(f"SELECT * FROM {table_name} WHERE block = ? LIMIT 1 OFFSET ?", (block, index,))
             row = self.cursor.fetchone()
+            self.close()
             if row:
-                logger.info('The operation completed successfully')
-                self.close()
+                logger.info("The row from survey has imported successfully")
                 return row  # Return tuple containing row values
             else:
-                print(f"No row found at index {index} in table {table_name}")
-                logger.warning('the specified row is not found at the exact index')
-                self.close()
+                print(f"No row found at index {index} and block {block} in table {table_name}")
+                logger.warning("Row is not found")
                 return None
         except sqlite3.Error as e:
             print(f"Error fetching row from table {table_name}: {e}")
-            logger.error("Errow while trying get a row")
+            logger.error("Error, make sure you filled everything correctly")
             self.close()
             return None
 
-    def store_response(self, Respondent_ID, Attributes, Best_Attribute, Worst_Attribute, Block, Task, Age_Range, Gender):
+    def store_response(self, column_name, Respondent_ID, Attributes, Best_Attribute, Worst_Attribute, Block, Task, Age_Range, Gender):
         try:
             for Attribute in Attributes:
                 Response = 0
                 if Attribute == Best_Attribute:
                     Response = 1
+                    logger.info("The best Attribute is stored")
                 elif Attribute == Worst_Attribute:
                     Response = -1
+                    logger.info("The worst Attribute is stored")
 
-                insert_query = "INSERT INTO response_Apple__Iphone (Respondent_ID, Attribute, Block, Task, Response, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?, ?)"
-                self.cursor.execute(insert_query, (Respondent_ID, Attribute, Block, Task, Response, Age_Range, Gender))
+                # Construct the INSERT query with the provided column name
+                insert_query = f"INSERT INTO Attributes ({column_name}, Respondent_ID, Block, Task, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?)"
+                self.cursor.execute(insert_query, (Response, Respondent_ID, Block, Task, Age_Range, Gender))
 
             self.connection.commit()
-            logger.info('Operated completed successfully')
+            logger.info('Operation completed successfully')
             self.close()
         except Exception as e:
             self.close()
             self.connection.rollback()
+            logger.warning("Make sure you filled everything correctly")
             raise e
+
+    
+
+        
 
     def create_response_iphone_table(self):
         create_table_query = """
@@ -276,11 +285,67 @@ class SqlHandle:
         logger.info('Table created successfully')
         self.close()
 
+    def update_product_name(self, company: str, old_product: str, new_product: str):
+        try:
+            # Construct the column name based on the provided company and product
+            column_name = f"{company}__{old_product}"
+        
+            # Check if the column exists in the Attributes table
+            self.cursor.execute("PRAGMA table_info(Attributes)")
+            columns = [row[1] for row in self.cursor.fetchall()]
+            if column_name not in columns:
+                logger.warning('The specifed column does not exist')
+                self.close()
+                return f"Column '{column_name}' does not exist."
+
+        # Construct the SQL query to update the column name to the new product name
+            query = f"ALTER TABLE Attributes RENAME COLUMN {column_name} TO {company}__{new_product}"
+        
+        # Execute the SQL query to update the column name
+            self.cursor.execute(query)
+            self.connection.commit()
+            self.close()
+            logger.info("Product name updated successfully")
+            return f"Product name updated successfully from '{old_product}' to '{new_product}'."
+        except sqlite3.Error as e:
+            self.connection.rollback()
+            self.close()
+            logger.error('Error make sure you filled everything correctly')
+            return f"Error updating product name: {e}"
+        
+    def is_table_empty(self, table_name):
+        try:
+            self.cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
+            count = self.cursor.fetchone()[0]
+            self.close()
+            logger.info('The information about the table recieved successfully')
+            return count == 0
+        except sqlite3.Error as e:
+            print(f"Error checking if table '{table_name}' is empty: {e}")
+            self.close()
+            return False
+
+    def get_last_respondent_ID(self, table_name):
+        try:
+            self.cursor.execute(f"SELECT MAX(Respondent_ID) FROM {table_name}")
+            last_respondent_ID = self.cursor.fetchone()[0]
+            logger.info("The operation completed successfully")
+            self.close()
+            return last_respondent_ID
+        except sqlite3.Error as e:
+            print(f"Error fetching last Respondent ID from table '{table_name}': {e}")
+            logger.error("Error recheck the inserted data")
+            self.close()
+            return None
+
+
     def sql_to_pandas(self, query):
         df = pd.read_sql_query(query, self.connection)
+        logger.info('SQL To Pandas')
         self.close()
         return df
 
     def pandas_to_sql(self, df, table_name, if_exists='replace'):
         df.to_sql(table_name, self.connection, if_exists=if_exists, index=False)
+        logger.info("Pandas To SQL")
         self.close()

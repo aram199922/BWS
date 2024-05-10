@@ -1,12 +1,15 @@
 import os
 import sys
 
-current_directory = os.getcwd()
-sys.path.insert(0, current_directory)
+#current_directory = os.getcwd()
+#sys.path.insert(0, current_directory)
 
 from BWS.api.main import app
 from fastapi import HTTPException, Query
-from BWS.api.response import get_row_from_survey, create_response_phone, store_response, is_table_empty, get_last_respondent_ID
+from BWS.database import SqlHandle
+
+instance = SqlHandle
+
 
 current_task = 1  # Initialize current task to 1
 
@@ -53,15 +56,15 @@ async def select_age_range(Age_Range: str = Query(..., description="Please selec
     respondent_info["age_range"] = Age_Range
 
     # Create the response table if it does not exist
-    create_response_phone()  # This line creates the response_phone table
+    instance.create_response_phone()  # This line creates the response_phone table
 
     # Check if the response table is empty
-    if is_table_empty():
+    if instance.is_table_empty():
         # If the table is empty, assign the first respondent ID as 1
         respondent_info["user"] = 1
     else:
         # If the table is not empty, get the last respondent ID from the table and assign the next respondent ID
-        last_respondent_ID = get_last_respondent_ID()
+        last_respondent_ID = instance.get_last_respondent_ID()
         respondent_info["user"] = last_respondent_ID + 1
 
     # Reset the flag for changing demographics
@@ -119,10 +122,10 @@ async def get_current_task():
             raise HTTPException(status_code=400, detail="No task selected. Please retrieve a task using the GET endpoint first.")
         
         # Retrieve attributes for the last task from the survey table based on the block
-        row = get_row_from_survey("survey_Apple__Iphone", last_task_id - 1, block)  # Index is 0-based
+        row = instance.get_row_from_survey("survey_Apple__Iphone", last_task_id - 1, block)  # Index is 0-based
         if not row:
             raise HTTPException(status_code=404, detail=f"No attributes found for Task {last_task_id} and Block {block}")
-
+        
         # Extract attributes from the row
         attributes = row[2:]
 
@@ -135,7 +138,7 @@ async def get_current_task():
         return response
 
     # Retrieve attributes for the current task from the survey table based on the block
-    row = get_row_from_survey("survey_Apple__Iphone", current_task - 1, block)  # Index is 0-based
+    row = instance.get_row_from_survey("survey_Apple__Iphone", current_task - 1, block)  # Index is 0-based
     if not row:
         raise HTTPException(status_code=404, detail=f"No attributes found for Task {current_task} and Block {block}")
 
@@ -184,7 +187,7 @@ async def select_task_attributes(best_attribute: str = Query(...), worst_attribu
         raise HTTPException(status_code=400, detail="No task selected. Please retrieve a task using the GET endpoint first.")
 
     # Retrieve attributes for the specified task from the survey table
-    row = get_row_from_survey("survey_Apple__Iphone", last_task_id - 1, block)  # Index is 0-based
+    row = instance.get_row_from_survey("survey_Apple__Iphone", last_task_id - 1, block)  # Index is 0-based
     if not row:
         raise HTTPException(status_code=404, detail=f"No attributes found for Task {last_task_id}")
     
@@ -196,11 +199,11 @@ async def select_task_attributes(best_attribute: str = Query(...), worst_attribu
         raise HTTPException(status_code=400, detail=f"Invalid attribute selection. Task {last_task_id} does not have the selected attribute(s)")
 
     # Create table if it does not exist
-    create_response_phone()
+    instance.create_response_phone()
     
     # Store the selected best and worst attributes, along with Respondent_ID, age range, gender, and block in the database
     try:
-        store_response(Respondent_ID=Respondent_ID, Block=block, Task=last_task_id, Attributes=available_attributes, Best_Attribute=best_attribute, Worst_Attribute=worst_attribute, Age_Range=Age_Range, Gender=Gender)
+        instance.store_response(Respondent_ID=Respondent_ID, Block=block, Task=last_task_id, Attributes=available_attributes, Best_Attribute=best_attribute, Worst_Attribute=worst_attribute, Age_Range=Age_Range, Gender=Gender)
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to store attribute response")
 

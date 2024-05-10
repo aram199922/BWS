@@ -1,8 +1,8 @@
 import os
 import sys
 
-current_directory = os.getcwd()
-sys.path.insert(0, current_directory)
+#current_directory = os.getcwd()
+#sys.path.insert(0, current_directory)
 
 from BWS.api.main import app
 from BWS.database.db_interactions import SqlHandle
