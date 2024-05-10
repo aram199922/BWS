@@ -1,16 +1,10 @@
-import os
-import sys
-
-#current_directory = os.getcwd()
-#sys.path.insert(0, current_directory)
-
-from BWS.api.main import app
-from BWS.database.db_interactions import SqlHandle
+from .main import app
+from ..database.db_interactions import SqlHandle
 
 inst = SqlHandle()
 
 # Getting company and product name and product's attributes
-@app.post("/Provide Company Details/")
+@app.post("/Provide Company Details/{Company}&{Product}")
 async def inserting_attributes(Company: str, Product: str, Attributes: list[str]):
     """
     Please provide your company's name, product and its attributes.
@@ -20,3 +14,4 @@ async def inserting_attributes(Company: str, Product: str, Attributes: list[str]
     column_name = f"{Company}__{Product}"
     inst.insert_attributes(column_name, Attributes)
     return {"Data inserted successfully"}
+    #return {'product': column_name, 'attributes': Attributes}

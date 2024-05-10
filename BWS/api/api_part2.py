@@ -1,15 +1,8 @@
-import os
-import sys
-
-#current_directory = os.getcwd()
-#sys.path.insert(0, current_directory)
-
-from BWS.api.main import app
+from .main import app
+from ..database.db_interactions import SqlHandle
 from fastapi import HTTPException, Query
-from BWS.database import SqlHandle
 
-instance = SqlHandle
-
+instance = SqlHandle()
 
 current_task = 1  # Initialize current task to 1
 
