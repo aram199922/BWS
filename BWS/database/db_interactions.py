@@ -19,17 +19,40 @@ logger.addHandler(ch)
 
 
 class SqlHandle:
+    """
+    Class with all the methods for interacting with the database
+
+    """    
     def __init__(self, db_name="testDB.db"):
+        """Creating the instance of db connection
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+
+        Args:
+            db_name (str, optional): _description_. Defaults to "testDB.db".
+        """        
         self.db_name = db_name
         self.connection = sqlite3.connect(db_name)
         self.cursor = self.connection.cursor()
 
     def close(self):
+        """Function which will close the connection
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.close()
+        """        
         self.cursor.close()
         self.connection.close()
         logger.info('the connection has been closed')
 
     def create_database(self):
+        """Function for creating the db
+
+        """        
         if not os.path.exists(self.db_name):
             logger.info('Database has been created')
             print("Database created successfully.")
@@ -40,7 +63,18 @@ class SqlHandle:
         self.close()
 
 
-    def push_flat_file_to_database(self, file_name, table_name):
+    def push_flat_file_to_database(self, file_name, table_name:str):
+        """Function for pushing flat files to the database
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.push_flat_file_to_database('master_design.csv', 'Master_Design')
+        
+        Args:
+            file_name (_type_): name of the file
+            table_name (str): name of the table that is going to be created
+        """        
         if os.path.exists(file_name):
             try:
                 with open(file_name, 'rb') as f:
@@ -56,7 +90,21 @@ class SqlHandle:
         self.close()
     
 
-    def insert_attributes(self, column_name, values_list):
+    def insert_attributes(self, column_name:str, values_list:list)->str:
+        """Function for inserting the attributes
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.insert_attributes('Dell_Notebook', ['Screen','Ram','VideoCard'])
+
+        Args:
+            column_name (str): name of company product
+            values_list (list): list of attributes
+
+        Returns:
+            str: clarification
+        """          
         try:
             column_name = column_name.replace(" ", "_")
             self.cursor.execute("CREATE TABLE IF NOT EXISTS Attributes (rowid INTEGER PRIMARY KEY)")
@@ -94,7 +142,20 @@ class SqlHandle:
             self.close()
             return "Error inserting attributes"
 
-    def get_attributes(self, column_name):
+    def get_attributes(self, column_name:str)->list:
+        """Getting the desired attribute list
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.get_attributes('Dell_Notebook')
+
+        Args:
+            column_name (str): name of the column
+
+        Returns:
+            list: list of the column values
+        """        
         try:
             self.cursor.execute(f"SELECT {column_name} FROM Attributes WHERE {column_name} IS NOT NULL")
             result = self.cursor.fetchall()
@@ -113,15 +174,19 @@ class SqlHandle:
             self.close()
             return None
 
-    def read_table(self, table_name):
-        """
-        Reads all the information from the specified table in the 'testDB.db' database.
+    def read_table(self, table_name:str)->pd.DataFrame:
+        """Return the table in dataframe format
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.read_table('Master_Design')
 
         Args:
-        table_name (str): Name of the table to read data from.
+            table_name (str): name of the table
 
         Returns:
-        pandas.DataFrame: A DataFrame containing all the data from the table.
+            pd.DataFrame: dataframe of the table
         """
         # Read the table into a pandas DataFrame
         df = pd.read_sql_query(f"SELECT * FROM {table_name}", self.connection)
@@ -130,17 +195,21 @@ class SqlHandle:
         return df
 
 
-    def insert_rows(self, table_name, df):
-        """
-        Inserts rows into the specified table.
+    def insert_rows(self, table_name:str, df:pd.DataFrame)->str:
+        """Inserting rows into the table
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.insert_rows('Response_Dell_Notebook', responses)
 
         Args:
-        table_name (str): Name of the table to insert rows into.
-        df (DataFrame): Pandas DataFrame containing rows to insert.
+            table_name (str): Name of the table
+            df (pd.DataFrame): dataframe which rows are going to be inserted
 
         Returns:
-        str: A message indicating the success or failure of the operation.
-        """
+            str: clarification
+        """    
         try:
             # Get the number of columns in the table
             self.cursor.execute(f"PRAGMA table_info({table_name})")
@@ -175,7 +244,20 @@ class SqlHandle:
             self.close()
             return f"Error inserting rows into table {table_name}: {e}"
 
-    def remove_column_or_row(self, column_name, to_remove):
+    def remove_column_or_row(self, column_name:str, to_remove:str):
+        """Removing column or row from table Attributes
+        If the same values will delete column else only the value of the column
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.remove_column_or_row('Dell_Notebook', 'Screen')
+            >>> inst.remove_column_or_row('Dell_Notebook', 'Dell_Notebook')
+
+        Args:
+            column_name (str): name of the column
+            to_remove (str): remove whole column or value in it
+        """        
         try:
             # Check if column exists in the table schema
             self.cursor.execute(f"PRAGMA table_info(Attributes)")
@@ -209,17 +291,21 @@ class SqlHandle:
             self.close()
     
 
-    def get_row_from_survey(self, table_name, index, block):
-        """
-        Retrieves a row from the specified table based on its basic index and block.
+    def get_row_from_survey(self, table_name:str, index:int, block:int)->tuple:
+        """Getting row (question) from the survey
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.get_row_from_survey('Response_Dell_Notebook', 1, 2)
 
         Args:
-        table_name (str): Name of the table to retrieve the row from.
-        index (int): The index of the row to retrieve (0-based).
-        block (int): The block number.
+            table_name (str): name of the survey table
+            index (int): index of row to get
+            block (int): from which block of questions to get
 
         Returns:
-        tuple: A tuple containing the values of the row retrieved.
+            tuple: tuple containing row values
         """
         try:
         # Execute query to fetch the row based on index and block
@@ -239,7 +325,23 @@ class SqlHandle:
             self.close()
             return None
 
-    def store_response(self, column_name, Respondent_ID, Attributes, Best_Attribute, Worst_Attribute, Block, Task, Age_Range, Gender):
+    def store_response(self, column_name:str, Respondent_ID:int, Attributes:list, Best_Attribute:str, Worst_Attribute:str, Block:int, Task:int, Age_Range:str, Gender:str):
+        """After getting the answer store it in the response table
+
+        Args:
+            column_name (str): name of column
+            Respondent_ID (int): _description_
+            Attributes (list): _description_
+            Best_Attribute (str): _description_
+            Worst_Attribute (str): _description_
+            Block (int): _description_
+            Task (int): _description_
+            Age_Range (str): _description_
+            Gender (str): _description_
+
+        Raises:
+            e: _description_
+        """        
         try:
             for Attribute in Attributes:
                 Response = 0
