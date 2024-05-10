@@ -80,3 +80,22 @@ def get_row_from_survey(table_name, index, block):
         print(f"Error fetching row from table {table_name}: {e}")
         db.close()
         return None
+    
+
+# Function to check if the response table is empty
+def is_table_empty():
+    conn = sqlite3.connect('testDB.db')  # Replace 'your_database.db' with your actual SQLite database file
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM response_phone")  # Replace 'response_table' with your actual table name
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count == 0
+
+# Function to get the last respondent ID from the response table
+def get_last_respondent_ID():
+    conn = sqlite3.connect('testDB.db')  # Replace 'your_database.db' with your actual SQLite database file
+    cursor = conn.cursor()
+    cursor.execute("SELECT MAX(Respondent_ID) FROM response_phone")  # Replace 'response_table' with your actual table name
+    last_respondent_ID = cursor.fetchone()[0]
+    conn.close()
+    return last_respondent_ID

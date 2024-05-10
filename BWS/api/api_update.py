@@ -4,10 +4,9 @@ import sys
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
 
-from fastapi import FastAPI, HTTPException
-from starlette.responses import RedirectResponse
+from BWS.api.main import app
+from fastapi import HTTPException
 
-app = FastAPI()
 
 import sqlite3
 
