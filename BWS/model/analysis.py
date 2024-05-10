@@ -53,20 +53,47 @@ def push_survey_design(column_name:str,survey_design:pd.DataFrame):
     inst.pandas_to_sql(survey_design, table_name)
     return
 
-def push_analysis1(product_name): 
+def push_analysis1(product_name:str):
+    """Analyse and push to DB 1
+
+    Examples:
+        >>> from BWS.model.analysis import push_analysis1
+        >>> push_analysis1("Cisco_Router")
+
+    Args:
+        product_name (str): Name of the product, which responses are going to be analyzed
+    """
     data = inst.read_table(f"response_{product_name}") 
     data.drop(columns=['id'], inplace=True) 
     result = utils.output_1_simple_demographic(data) 
     inst.pandas_to_sql(result, f"analysis1_{product_name}") 
     return
 
-def push_analysis2(product_name): 
+def push_analysis2(product_name:str):
+    """Analyse and push to DB 2
+
+    Examples:
+        >>> from BWS.model.analysis import push_analysis2
+        >>> push_analysis2("Cisco_Router")
+
+    Args:
+        product_name (str): Name of the product, which responses are going to be analyzed
+    """
     data = inst.read_table(f"response_{product_name}") 
     data.drop(columns=['id'], inplace=True) 
     result = utils.output_2_general_importance_plot_df(data) 
     inst.pandas_to_sql(result, f"analysis2_{product_name}") 
  
-def push_analysis3(product_name): 
+def push_analysis3(product_name:str):
+    """Analyse and push to DB 3
+
+    Examples:
+        >>> from BWS.model.analysis import push_analysis3
+        >>> push_analysis3("Cisco_Router")
+
+    Args:
+        product_name (str): Name of the product, which responses are going to be analyzed
+    """
     data = inst.read_table(f"response_{product_name}") 
     data.drop(columns=['id'], inplace=True) 
     result = utils.output_3_4_importance_by_demographic(data) 
