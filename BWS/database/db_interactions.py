@@ -45,7 +45,6 @@ class SqlHandle:
             >>> inst = SqlHandle()
             >>> inst.close()
         """        
-        self.cursor.close()
         self.connection.close()
         logger.info('the connection has been closed')
 
@@ -308,12 +307,11 @@ class SqlHandle:
             logger.error("Error, make sure you filled everything correctly")
             return None
 
-    def store_response(self, table_name:str, column_name:str, Respondent_ID:int, Attributes:list, Best_Attribute:str, Worst_Attribute:str, Block:int, Task:int, Age_Range:str, Gender:str):
+    def store_response(self, table_name:str, Respondent_ID:int, Attributes:list, Best_Attribute:str, Worst_Attribute:str, Block:int, Task:int, Age_Range:str, Gender:str):
         """After getting the answer store it in the response table
 
         Args:
             table_name (str): name of the table to store the data
-            column_name (str): name of column
             Respondent_ID (int): _description_
             Attributes (list): _description_
             Best_Attribute (str): _description_
@@ -337,8 +335,8 @@ class SqlHandle:
                     logger.info("The worst Attribute is stored")
 
                 # Construct the INSERT query with the provided column name and table name
-                insert_query = f"INSERT INTO {table_name} ({column_name}, Respondent_ID, Block, Task, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?)"
-                self.cursor.execute(insert_query, (Response, Respondent_ID, Block, Task, Age_Range, Gender))
+                insert_query = f"INSERT INTO {table_name} (Response, Attribute, Respondent_ID, Block, Task, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                self.cursor.execute(insert_query, (Response, Attribute, Respondent_ID, Block, Task, Age_Range, Gender))
 
             self.connection.commit()
             logger.info('Operation completed successfully')
@@ -349,9 +347,9 @@ class SqlHandle:
 
         
 
-    def create_response_iphone_table(self):
-        create_table_query = """
-        CREATE TABLE IF NOT EXISTS response_Apple__Iphone (
+    def create_response_table(self, table_name):
+        create_table_query = f"""
+        CREATE TABLE IF NOT EXISTS {table_name} (
             id INTEGER PRIMARY KEY,
             Respondent_ID INTEGER,
             Attribute TEXT,

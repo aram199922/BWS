@@ -4,6 +4,7 @@ from fastapi import HTTPException, Query
 
 instance = SqlHandle()
 
+table = "response_Apple__Iphone"
 current_task = 1  # Initialize current task to 1
 
 # Define age ranges for demographic questions
@@ -49,15 +50,15 @@ async def select_age_range(Age_Range: str = Query(..., description="Please selec
     respondent_info["age_range"] = Age_Range
 
     # Create the response table if it does not exist
-    instance.create_response_phone()  # This line creates the response_phone table
+    instance.create_response_table(table_name=table)  
 
     # Check if the response table is empty
-    if instance.is_table_empty():
+    if instance.is_table_empty(table_name=table):
         # If the table is empty, assign the first respondent ID as 1
         respondent_info["user"] = 1
     else:
         # If the table is not empty, get the last respondent ID from the table and assign the next respondent ID
-        last_respondent_ID = instance.get_last_respondent_ID()
+        last_respondent_ID = instance.get_last_respondent_ID(table)
         respondent_info["user"] = last_respondent_ID + 1
 
     # Reset the flag for changing demographics
@@ -123,12 +124,12 @@ async def get_current_task():
         attributes = row[2:]
 
         # Prepare response with message and last task's attributes
-        response = {
+        response1 = {
             "message": "Please enter and submit the current task's attributes before proceeding to the next task.",
             "current_task_attributes": attributes
         }
 
-        return response
+        return response1
 
     # Retrieve attributes for the current task from the survey table based on the block
     row = instance.get_row_from_survey("survey_Apple__Iphone", current_task - 1, block)  # Index is 0-based
@@ -139,7 +140,7 @@ async def get_current_task():
     attributes = row[2:]
 
     # Prepare response with task ID and attributes
-    response = {
+    response2 = {
         "task_id": current_task,
         "attributes": attributes
     }
@@ -153,7 +154,7 @@ async def get_current_task():
     # Reset the flag for task attributes entered and accepted
     task_attributes_entered = False
 
-    return response
+    return response2
 
 
 
@@ -191,12 +192,9 @@ async def select_task_attributes(best_attribute: str = Query(...), worst_attribu
     if best_attribute not in available_attributes or worst_attribute not in available_attributes:
         raise HTTPException(status_code=400, detail=f"Invalid attribute selection. Task {last_task_id} does not have the selected attribute(s)")
 
-    # Create table if it does not exist
-    instance.create_response_phone()
-    
     # Store the selected best and worst attributes, along with Respondent_ID, age range, gender, and block in the database
     try:
-        instance.store_response(Respondent_ID=Respondent_ID, Block=block, Task=last_task_id, Attributes=available_attributes, Best_Attribute=best_attribute, Worst_Attribute=worst_attribute, Age_Range=Age_Range, Gender=Gender)
+        instance.store_response(table_name=table, Respondent_ID=Respondent_ID, Block=block, Task=last_task_id, Attributes=available_attributes, Best_Attribute=best_attribute, Worst_Attribute=worst_attribute, Age_Range=Age_Range, Gender=Gender)
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to store attribute response")
 
