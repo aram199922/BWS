@@ -60,7 +60,6 @@ class SqlHandle:
         else:
             print("Database already exists.")
             logger.warning('You are trying to create a database that already exists')
-        self.close()
 
 
     def push_flat_file_to_database(self, file_name, table_name:str):
@@ -87,7 +86,6 @@ class SqlHandle:
         else:
             print(f"File '{file_name}' not found.")
             logger.warning('The file you are trying to push cannot be found')
-        self.close()
     
 
     def insert_attributes(self, column_name:str, values_list:list)->str:
@@ -132,14 +130,12 @@ class SqlHandle:
                     self.cursor.execute(f"UPDATE Attributes SET {column_name} = ? WHERE rowid = ?", (value, rowid))
             logger.info('Parameters has been pushed to the Attributes table successfully')
             self.connection.commit()
-            self.close()
             return "Data inserted successfully"
             
         
         except sqlite3.Error as e:
             print(f"Error inserting attributes for column: {column_name} - {e}")
             logging.warning('Error, recheck the values you are trying to insert')
-            self.close()
             return "Error inserting attributes"
 
     def get_attributes(self, column_name:str)->list:
@@ -162,16 +158,13 @@ class SqlHandle:
             if result:
                 attributes = [row[0] for row in result]
                 logger.info('Attrbiutes has been found')
-                self.close()
                 return attributes
             else:
                 print(f"No attributes found for column: {column_name}")
-                self.close()
                 return None
         except sqlite3.Error as e:
             print(f"Error fetching attributes for column: {column_name} - {e}")
             logging.error('Error, attributes cannot be found')
-            self.close()
             return None
 
     def read_table(self, table_name:str)->pd.DataFrame:
@@ -191,7 +184,6 @@ class SqlHandle:
         # Read the table into a pandas DataFrame
         df = pd.read_sql_query(f"SELECT * FROM {table_name}", self.connection)
         logger.info('Table has been shown')
-        self.close()
         return df
 
 
@@ -219,7 +211,6 @@ class SqlHandle:
             # Check if the number of columns in the DataFrame matches the number of columns in the table
             print("DataFrame Columns:", df.columns)  # Add this line
             if len(df.columns) != len(table_columns):
-                self.close()
                 logger.error(f"Number of columns in DataFrame ({len(df.columns)}) doesn't match the number of columns in the table ({len(table_columns)}).")
                 return f"Number of columns in DataFrame ({len(df.columns)}) doesn't match the number of columns in the table ({len(table_columns)})."
 
@@ -236,12 +227,10 @@ class SqlHandle:
             self.cursor.executemany(f"INSERT INTO {table_name} VALUES ({','.join(['?' for _ in range(len(table_columns))])})", df.values.tolist())
             logger.info("Rows were inserted successfully!")
             self.connection.commit()
-            self.close()
             
             return "Rows inserted successfully."
         except sqlite3.Error as e:
             logger.error("You have error when inserting rows into table")
-            self.close()
             return f"Error inserting rows into table {table_name}: {e}"
 
     def remove_column_or_row(self, column_name:str, to_remove:str):
@@ -267,7 +256,6 @@ class SqlHandle:
             if column_name not in columns:
                 print(f"Column '{column_name}' does not exist in the table.")
                 logger.warning('The columns you are trying to remove doesnt exist in the table')
-                self.close()
                 return
 
             # Check if 'to_remove' is a valid value
@@ -276,19 +264,16 @@ class SqlHandle:
                 self.cursor.execute(f"ALTER TABLE Attributes DROP COLUMN {to_remove}")
                 print(f"Column '{to_remove}' removed successfully.")
                 logger.info("The column(s) where removed")
-                self.close()
             else:
                 # Remove the entire row where the specified value is located
                 self.cursor.execute(f"DELETE FROM Attributes WHERE {column_name} = ?", (to_remove,))
                 print(f"Row with value '{to_remove}' from column '{column_name}' removed successfully.")
                 logger("The operation has been completed successfully")
-                self.close()
 
             self.connection.commit()
         except sqlite3.Error as e:
             print(f"Error removing '{to_remove}': {e}")
             logger.error('Error while trying to remove the specifed column/row')
-            self.close()
     
 
     def get_row_from_survey(self, table_name:str, index:int, block:int)->tuple:
@@ -311,7 +296,6 @@ class SqlHandle:
         # Execute query to fetch the row based on index and block
             self.cursor.execute(f"SELECT * FROM {table_name} WHERE block = ? LIMIT 1 OFFSET ?", (block, index,))
             row = self.cursor.fetchone()
-            self.close()
             if row:
                 logger.info("The row from survey has imported successfully")
                 return row  # Return tuple containing row values
@@ -322,13 +306,13 @@ class SqlHandle:
         except sqlite3.Error as e:
             print(f"Error fetching row from table {table_name}: {e}")
             logger.error("Error, make sure you filled everything correctly")
-            self.close()
             return None
 
-    def store_response(self, column_name:str, Respondent_ID:int, Attributes:list, Best_Attribute:str, Worst_Attribute:str, Block:int, Task:int, Age_Range:str, Gender:str):
+    def store_response(self, table_name:str, column_name:str, Respondent_ID:int, Attributes:list, Best_Attribute:str, Worst_Attribute:str, Block:int, Task:int, Age_Range:str, Gender:str):
         """After getting the answer store it in the response table
 
         Args:
+            table_name (str): name of the table to store the data
             column_name (str): name of column
             Respondent_ID (int): _description_
             Attributes (list): _description_
@@ -352,20 +336,16 @@ class SqlHandle:
                     Response = -1
                     logger.info("The worst Attribute is stored")
 
-                # Construct the INSERT query with the provided column name
-                insert_query = f"INSERT INTO Attributes ({column_name}, Respondent_ID, Block, Task, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?)"
+                # Construct the INSERT query with the provided column name and table name
+                insert_query = f"INSERT INTO {table_name} ({column_name}, Respondent_ID, Block, Task, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?)"
                 self.cursor.execute(insert_query, (Response, Respondent_ID, Block, Task, Age_Range, Gender))
 
             self.connection.commit()
             logger.info('Operation completed successfully')
-            self.close()
         except Exception as e:
-            self.close()
             self.connection.rollback()
             logger.warning("Make sure you filled everything correctly")
             raise e
-
-    
 
         
 
@@ -385,7 +365,6 @@ class SqlHandle:
         self.cursor.execute(create_table_query)
         self.connection.commit()
         logger.info('Table created successfully')
-        self.close()
 
     def update_product_name(self, company: str, old_product: str, new_product: str):
         try:
@@ -397,7 +376,6 @@ class SqlHandle:
             columns = [row[1] for row in self.cursor.fetchall()]
             if column_name not in columns:
                 logger.warning('The specifed column does not exist')
-                self.close()
                 return f"Column '{column_name}' does not exist."
 
         # Construct the SQL query to update the column name to the new product name
@@ -406,12 +384,10 @@ class SqlHandle:
         # Execute the SQL query to update the column name
             self.cursor.execute(query)
             self.connection.commit()
-            self.close()
             logger.info("Product name updated successfully")
             return f"Product name updated successfully from '{old_product}' to '{new_product}'."
         except sqlite3.Error as e:
             self.connection.rollback()
-            self.close()
             logger.error('Error make sure you filled everything correctly')
             return f"Error updating product name: {e}"
         
@@ -419,12 +395,10 @@ class SqlHandle:
         try:
             self.cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
             count = self.cursor.fetchone()[0]
-            self.close()
             logger.info('The information about the table recieved successfully')
             return count == 0
         except sqlite3.Error as e:
             print(f"Error checking if table '{table_name}' is empty: {e}")
-            self.close()
             return False
 
     def get_last_respondent_ID(self, table_name):
@@ -432,22 +406,18 @@ class SqlHandle:
             self.cursor.execute(f"SELECT MAX(Respondent_ID) FROM {table_name}")
             last_respondent_ID = self.cursor.fetchone()[0]
             logger.info("The operation completed successfully")
-            self.close()
             return last_respondent_ID
         except sqlite3.Error as e:
             print(f"Error fetching last Respondent ID from table '{table_name}': {e}")
             logger.error("Error recheck the inserted data")
-            self.close()
             return None
 
 
     def sql_to_pandas(self, query):
         df = pd.read_sql_query(query, self.connection)
         logger.info('SQL To Pandas')
-        self.close()
         return df
 
     def pandas_to_sql(self, df, table_name, if_exists='replace'):
         df.to_sql(table_name, self.connection, if_exists=if_exists, index=False)
         logger.info("Pandas To SQL")
-        self.close()
