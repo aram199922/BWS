@@ -40,13 +40,37 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../add/">Addtion</a>
-                </li>
-              </ul>
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">API</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#api-for-providing-company-and-product-details">API for providing company and product details</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_company_details">api_company_details</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_company_details.inserting_attributes">inserting_attributes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#api-for-conducting-answering-the-survey">API for conducting (answering) the survey</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_part2">api_part2</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_part2.get_current_task">get_current_task</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_part2.select_age_range">select_age_range</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_part2.select_gender">select_gender</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_part2.select_task_attributes">select_task_attributes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#api-for-serving-the-conducted-analysis">API for serving the conducted analysis</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_part3">api_part3</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_part3.get_product_analysis">get_product_analysis</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_update">api_update</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.api.api_update.update_product">update_product</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -82,11 +106,1409 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="documentation-of-api-functions">Documentation of API functions</h1>
+<h2 id="api-for-providing-company-and-product-details">API for providing company and product details</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="BWS.api.api_company_details"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.api.api_company_details.inserting_attributes" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">inserting_attributes</span><span class="p">(</span><span class="n">Company</span><span class="p">,</span> <span class="n">Product</span><span class="p">,</span> <span class="n">Attributes</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Please provide your company's name, product and its attributes.</p>
+<p>Example of attributes format: ["Attribute1", "Attribute2", "Attribute3"]</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>Company</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Name of the company</p>
+              </div>
+            </li>
+            <li>
+              <b><code>Product</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Name of the product</p>
+              </div>
+            </li>
+            <li>
+              <b><code>Attributes</code></b>
+                  (<code>list[str]</code>)
+              –
+              <div class="doc-md-description">
+                <p>List of attributes characterizing the product</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>            –
+            <div class="doc-md-description">
+              <p>Clarification</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\api\api_company_details.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/Provide Company Details/</span><span class="si">{Company}</span><span class="s2">&amp;</span><span class="si">{Product}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">inserting_attributes</span><span class="p">(</span><span class="n">Company</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Product</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Attributes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Please provide your company&#39;s name, product and its attributes.</span>
+
+<span class="sd">    Example of attributes format: [&quot;Attribute1&quot;, &quot;Attribute2&quot;, &quot;Attribute3&quot;]</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Company (str): Name of the company</span>
+<span class="sd">        Product (str): Name of the product</span>
+<span class="sd">        Attributes (list[str]): List of attributes characterizing the product</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Clarification</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">column_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Company</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">Product</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">inst</span><span class="o">.</span><span class="n">insert_attributes</span><span class="p">(</span><span class="n">column_name</span><span class="p">,</span> <span class="n">Attributes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Data inserted successfully&quot;</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div><h2 id="api-for-conducting-answering-the-survey">API for conducting (answering) the survey</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="BWS.api.api_part2"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.api.api_part2.get_current_task" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">get_current_task</span><span class="p">()</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Retrieve attributes for the current task and allow users to select best and worst attributes.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>_type_</code></b>            –
+            <div class="doc-md-description">
+              <p><em>description</em></p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\api\api_part2.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/block/tasks&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_current_task</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve attributes for the current task and allow users to select best and worst attributes.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        HTTPException: _description_</span>
+<span class="sd">        HTTPException: _description_</span>
+<span class="sd">        HTTPException: _description_</span>
+<span class="sd">        HTTPException: _description_</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        _type_: _description_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">current_task</span><span class="p">,</span> <span class="n">last_task_id</span><span class="p">,</span> <span class="n">task_attributes_entered</span>
+
+    <span class="k">if</span> <span class="n">current_task</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Thank you for your feedback!&quot;</span><span class="p">}</span>
+
+    <span class="c1"># Retrieve respondent&#39;s ID and block from stored information</span>
+    <span class="n">Respondent_ID</span> <span class="o">=</span> <span class="n">respondent_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="p">((</span><span class="n">Respondent_ID</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Respondent_ID</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;User ID not provided&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check if task attributes have been entered and accepted, skip this check for the first task</span>
+    <span class="k">if</span> <span class="n">current_task</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">task_attributes_entered</span><span class="p">:</span>
+        <span class="c1"># Check if the last task ID is set</span>
+        <span class="k">if</span> <span class="n">last_task_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;No task selected. Please retrieve a task using the GET endpoint first.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Retrieve attributes for the last task from the survey table based on the block</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">get_row_from_survey</span><span class="p">(</span><span class="s2">&quot;survey_Apple__Iphone&quot;</span><span class="p">,</span> <span class="n">last_task_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>  <span class="c1"># Index is 0-based</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;No attributes found for Task </span><span class="si">{</span><span class="n">last_task_id</span><span class="si">}</span><span class="s2"> and Block </span><span class="si">{</span><span class="n">block</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Extract attributes from the row</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+        <span class="c1"># Prepare response with message and last task&#39;s attributes</span>
+        <span class="n">response1</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Please enter and submit the current task&#39;s attributes before proceeding to the next task.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;current_task_attributes&quot;</span><span class="p">:</span> <span class="n">attributes</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">response1</span>
+
+    <span class="c1"># Retrieve attributes for the current task from the survey table based on the block</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">get_row_from_survey</span><span class="p">(</span><span class="s2">&quot;survey_Apple__Iphone&quot;</span><span class="p">,</span> <span class="n">current_task</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>  <span class="c1"># Index is 0-based</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;No attributes found for Task </span><span class="si">{</span><span class="n">current_task</span><span class="si">}</span><span class="s2"> and Block </span><span class="si">{</span><span class="n">block</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Extract attributes from the row</span>
+    <span class="n">attributes</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+    <span class="c1"># Prepare response with task ID and attributes</span>
+    <span class="n">response2</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;task_id&quot;</span><span class="p">:</span> <span class="n">current_task</span><span class="p">,</span>
+        <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="n">attributes</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Store the current task ID as the last task ID</span>
+    <span class="n">last_task_id</span> <span class="o">=</span> <span class="n">current_task</span>
+
+    <span class="c1"># Automatically move to the next task for the next request</span>
+    <span class="n">current_task</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Reset the flag for task attributes entered and accepted</span>
+    <span class="n">task_attributes_entered</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="n">response2</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.api.api_part2.select_age_range" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">select_age_range</span><span class="p">(</span><span class="n">Age_Range</span><span class="o">=</span><span class="n">Query</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Please select your age range from the options provided above&#39;</span><span class="p">))</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Please select your age range:
+- Under 18: &lt;18,
+- 18-25: 18-25,
+- 26-35: 26-35,
+- 36-45: 36-45,
+- Above 45: &gt;45</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>Age_Range</code></b>
+                  (<code>str</code>, default:
+                      <code><span title="fastapi.Query">Query</span>(..., description=&#39;Please select your age range from the options provided above&#39;)</code>
+)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em>. Defaults to Query(..., description="Please select your age range from the options provided above").</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>dict</code></b>            –
+            <div class="doc-md-description">
+              <p>Clarification</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\api\api_part2.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/Demographics/Age_Range&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">select_age_range</span><span class="p">(</span><span class="n">Age_Range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Please select your age range from the options provided above&quot;</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Please select your age range:</span>
+<span class="sd">    - Under 18: &lt;18,</span>
+<span class="sd">    - 18-25: 18-25,</span>
+<span class="sd">    - 26-35: 26-35,</span>
+<span class="sd">    - 36-45: 36-45,</span>
+<span class="sd">    - Above 45: &gt;45</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Age_Range (str, optional): _description_. Defaults to Query(..., description=&quot;Please select your age range from the options provided above&quot;).</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        HTTPException: _description_</span>
+<span class="sd">        HTTPException: _description_</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Clarification</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">demographics_changed</span>
+
+    <span class="k">if</span> <span class="n">demographics_changed</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Please complete all tasks in the current block before changing demographics.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">Age_Range</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">age_ranges</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Invalid age range selected&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Store respondent&#39;s age range</span>
+    <span class="n">respondent_info</span><span class="p">[</span><span class="s2">&quot;age_range&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Age_Range</span>
+
+    <span class="c1"># Create the response table if it does not exist</span>
+    <span class="n">instance</span><span class="o">.</span><span class="n">create_response_table</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table</span><span class="p">)</span>  
+
+    <span class="c1"># Check if the response table is empty</span>
+    <span class="k">if</span> <span class="n">instance</span><span class="o">.</span><span class="n">is_table_empty</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table</span><span class="p">):</span>
+        <span class="c1"># If the table is empty, assign the first respondent ID as 1</span>
+        <span class="n">respondent_info</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If the table is not empty, get the last respondent ID from the table and assign the next respondent ID</span>
+        <span class="n">last_respondent_ID</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">get_last_respondent_ID</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="n">respondent_info</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">last_respondent_ID</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># Reset the flag for changing demographics</span>
+    <span class="n">demographics_changed</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Age range saved successfully&quot;</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.api.api_part2.select_gender" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">select_gender</span><span class="p">(</span><span class="n">Gender</span><span class="o">=</span><span class="n">Query</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Please select your gender&#39;</span><span class="p">))</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gender:
+- Female
+- Male</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>Gender</code></b>
+                  (<code>str</code>, default:
+                      <code><span title="fastapi.Query">Query</span>(..., description=&#39;Please select your gender&#39;)</code>
+)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em>. Defaults to Query(..., description="Please select your gender").</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>dict</code></b>            –
+            <div class="doc-md-description">
+              <p>Clarification</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\api\api_part2.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/demographics/gender&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">select_gender</span><span class="p">(</span><span class="n">Gender</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Please select your gender&quot;</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gender:</span>
+<span class="sd">    - Female</span>
+<span class="sd">    - Male</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Gender (str, optional): _description_. Defaults to Query(..., description=&quot;Please select your gender&quot;).</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        HTTPException: _description_</span>
+<span class="sd">        HTTPException: _description_</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Clarification</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">demographics_changed</span>
+
+    <span class="k">if</span> <span class="n">demographics_changed</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Please complete all tasks in the current block before changing demographics.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">Gender</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gender_options</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Invalid gender selected&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Store respondent&#39;s gender</span>
+    <span class="n">respondent_info</span><span class="p">[</span><span class="s2">&quot;gender&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Gender</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="c1"># Set the flag indicating demographics have been changed</span>
+    <span class="n">demographics_changed</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Gender saved successfully&quot;</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.api.api_part2.select_task_attributes" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">select_task_attributes</span><span class="p">(</span><span class="n">best_attribute</span><span class="o">=</span><span class="n">Query</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="n">worst_attribute</span><span class="o">=</span><span class="n">Query</span><span class="p">(</span><span class="o">...</span><span class="p">))</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Allow users to select best and worst attributes for the current task.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>best_attribute</code></b>
+                  (<code>str</code>, default:
+                      <code><span title="fastapi.Query">Query</span>(...)</code>
+)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em>. Defaults to Query(...).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>worst_attribute</code></b>
+                  (<code>str</code>, default:
+                      <code><span title="fastapi.Query">Query</span>(...)</code>
+)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em>. Defaults to Query(...).</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>dict</code></b>            –
+            <div class="doc-md-description">
+              <p>Dictionary containing the best and worst selected attributes by the user</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\api\api_part2.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/block/tasks/selection&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">select_task_attributes</span><span class="p">(</span><span class="n">best_attribute</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="n">worst_attribute</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="o">...</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Allow users to select best and worst attributes for the current task.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        best_attribute (str, optional): _description_. Defaults to Query(...).</span>
+<span class="sd">        worst_attribute (str, optional): _description_. Defaults to Query(...).</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        HTTPException: _description_</span>
+<span class="sd">        HTTPException: _description_</span>
+<span class="sd">        HTTPException: _description_</span>
+<span class="sd">        HTTPException: _description_</span>
+<span class="sd">        HTTPException: _description_</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Dictionary containing the best and worst selected attributes by the user</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">last_task_id</span><span class="p">,</span> <span class="n">task_attributes_entered</span>
+
+    <span class="n">Respondent_ID</span> <span class="o">=</span> <span class="n">respondent_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Respondent_ID</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;User ID not provided&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Calculate block based on user ID</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="p">((</span><span class="n">Respondent_ID</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">Age_Range</span> <span class="o">=</span> <span class="n">respondent_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;age_range&quot;</span><span class="p">)</span>
+    <span class="n">Gender</span> <span class="o">=</span> <span class="n">respondent_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;gender&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check if last_task_id is None, indicating that no GET request has been made yet</span>
+    <span class="k">if</span> <span class="n">last_task_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;No task selected. Please retrieve a task using the GET endpoint first.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Retrieve attributes for the specified task from the survey table</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">get_row_from_survey</span><span class="p">(</span><span class="s2">&quot;survey_Apple__Iphone&quot;</span><span class="p">,</span> <span class="n">last_task_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>  <span class="c1"># Index is 0-based</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;No attributes found for Task </span><span class="si">{</span><span class="n">last_task_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Extract attributes from the row</span>
+    <span class="n">available_attributes</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+    <span class="c1"># Check if the selected attributes are available for the task</span>
+    <span class="k">if</span> <span class="n">best_attribute</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_attributes</span> <span class="ow">or</span> <span class="n">worst_attribute</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_attributes</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Invalid attribute selection. Task </span><span class="si">{</span><span class="n">last_task_id</span><span class="si">}</span><span class="s2"> does not have the selected attribute(s)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Store the selected best and worst attributes, along with Respondent_ID, age range, gender, and block in the database</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">store_response</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">Respondent_ID</span><span class="o">=</span><span class="n">Respondent_ID</span><span class="p">,</span> <span class="n">Block</span><span class="o">=</span><span class="n">block</span><span class="p">,</span> <span class="n">Task</span><span class="o">=</span><span class="n">last_task_id</span><span class="p">,</span> <span class="n">Attributes</span><span class="o">=</span><span class="n">available_attributes</span><span class="p">,</span> <span class="n">Best_Attribute</span><span class="o">=</span><span class="n">best_attribute</span><span class="p">,</span> <span class="n">Worst_Attribute</span><span class="o">=</span><span class="n">worst_attribute</span><span class="p">,</span> <span class="n">Age_Range</span><span class="o">=</span><span class="n">Age_Range</span><span class="p">,</span> <span class="n">Gender</span><span class="o">=</span><span class="n">Gender</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Failed to store attribute response&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Set the flag indicating task attributes have been entered and accepted</span>
+    <span class="n">task_attributes_entered</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;best_attribute&quot;</span><span class="p">:</span> <span class="n">best_attribute</span><span class="p">,</span> <span class="s2">&quot;worst_attribute&quot;</span><span class="p">:</span> <span class="n">worst_attribute</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div><h2 id="api-for-serving-the-conducted-analysis">API for serving the conducted analysis</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="BWS.api.api_part3"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.api.api_part3.get_product_analysis" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">get_product_analysis</span><span class="p">(</span><span class="n">company_name</span><span class="p">,</span> <span class="n">product_name</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Function for serving the analysis to the product owners</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>company_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Name of the company</p>
+              </div>
+            </li>
+            <li>
+              <b><code>product_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Name of the product</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>dict</code></b>            –
+            <div class="doc-md-description">
+              <p>Message clarification of the endpoint</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\api\api_part3.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/analysis&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_product_analysis</span><span class="p">(</span><span class="n">company_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">product_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function for serving the analysis to the product owners</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        company_name (str): Name of the company</span>
+<span class="sd">        product_name (str): Name of the product</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Message clarification of the endpoint</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="n">sql_handler</span> <span class="o">=</span> <span class="n">SqlHandle</span><span class="p">()</span>  <span class="c1"># Assuming this initializes your database connection</span>
+    <span class="n">table_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;analysis</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">company_name</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">product_name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">table_name</span> <span class="ow">in</span> <span class="n">table_names</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">sql_handler</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">table_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">table_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">table_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="BWS.api.api_update"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.api.api_update.update_product" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">update_product</span><span class="p">(</span><span class="n">company</span><span class="p">,</span> <span class="n">old_product</span><span class="p">,</span> <span class="n">new_product</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Endpoint to update the product name in the Attributes table.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>company</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Company Name</p>
+              </div>
+            </li>
+            <li>
+              <b><code>old_product</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Old Product Name</p>
+              </div>
+            </li>
+            <li>
+              <b><code>new_product</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>New Product Name</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="fastapi.HTTPException">HTTPException</span></code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>dict</code></b>            –
+            <div class="doc-md-description">
+              <p>Message of the updata</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\api\api_update.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;/update_product_name/</span><span class="si">{company}</span><span class="s2">/</span><span class="si">{old_product}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">update_product</span><span class="p">(</span><span class="n">company</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">old_product</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_product</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Endpoint to update the product name in the Attributes table.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        company (str): Company Name</span>
+<span class="sd">        old_product (str): Old Product Name</span>
+<span class="sd">        new_product (str): New Product Name</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        HTTPException: _description_</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Message of the updata</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Call the function to update the product name</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">update_product_name</span><span class="p">(</span><span class="n">company</span><span class="p">,</span> <span class="n">old_product</span><span class="p">,</span> <span class="n">new_product</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;successfully&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../add/" class="btn btn-neutral float-left" title="Addtion"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../SQL/" class="btn btn-neutral float-right" title="SQL">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -110,7 +1532,7 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../add/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../SQL/" style="color: #fcfcfc">Next &raquo;</a></span>
