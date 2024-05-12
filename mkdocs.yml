@@ -2,7 +2,6 @@ site_name: BWS Docs
 
 nav:
   - Home: index.md
-  - Addtion: add.md
   - API: API.md
   - SQL: SQL.md
   - Modelling: Model.md

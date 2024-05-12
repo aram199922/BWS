@@ -5,6 +5,16 @@ app = FastAPI()
 
 @app.get("/analysis")
 def get_product_analysis(company_name: str, product_name: str):
+    """
+    Function for serving the analysis to the product owners
+
+    Args:
+        company_name (str): Name of the company
+        product_name (str): Name of the product
+
+    Returns:
+        dict: Message clarification of the endpoint
+    """    
     sql_handler = SqlHandle()  # Assuming this initializes your database connection
     table_names = [f"analysis{i}_{company_name}__{product_name}" for i in range(1, 4)]
     results = {}

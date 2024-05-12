@@ -308,22 +308,22 @@ class SqlHandle:
             return None
 
     def store_response(self, table_name:str, Respondent_ID:int, Attributes:list, Best_Attribute:str, Worst_Attribute:str, Block:int, Task:int, Age_Range:str, Gender:str):
-        """After getting the answer store it in the response table
+        """Function for storing the answer of the user in the table
 
         Args:
-            table_name (str): name of the table to store the data
-            Respondent_ID (int): _description_
-            Attributes (list): _description_
-            Best_Attribute (str): _description_
-            Worst_Attribute (str): _description_
-            Block (int): _description_
-            Task (int): _description_
-            Age_Range (str): _description_
-            Gender (str): _description_
+            table_name (str): Name of the table
+            Respondent_ID (int): Id of the respondent
+            Attributes (list): Attribute list of the product
+            Best_Attribute (str): Chosen best
+            Worst_Attribute (str): Chosen worst
+            Block (int): Block number
+            Task (int): Task number
+            Age_Range (str): Age range of the user
+            Gender (str): Gender of the user
 
         Raises:
-            e: _description_
-        """        
+            e: Error
+        """
         try:
             for Attribute in Attributes:
                 Response = 0
@@ -347,7 +347,12 @@ class SqlHandle:
 
         
 
-    def create_response_table(self, table_name):
+    def create_response_table(self, table_name:str):
+        """Creating table for responses of the specific product if does not exist
+
+        Args:
+            table_name (str): Name of the table
+        """              
         create_table_query = f"""
         CREATE TABLE IF NOT EXISTS {table_name} (
             id INTEGER PRIMARY KEY,
@@ -365,6 +370,21 @@ class SqlHandle:
         logger.info('Table created successfully')
 
     def update_product_name(self, company: str, old_product: str, new_product: str):
+        """This function give the opportunity to change product name.
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.update_product_name('Dell', 'Notebook', 'Headphones')
+
+        Args:
+            company (str): Name of the company
+            old_product (str): Name of the old product
+            new_product (str): Name of new product to which will be updated
+
+        Returns:
+            _type_: Clarification
+        """        
         try:
             # Construct the column name based on the provided company and product
             column_name = f"{company}__{old_product}"
@@ -389,7 +409,20 @@ class SqlHandle:
             logger.error('Error make sure you filled everything correctly')
             return f"Error updating product name: {e}"
         
-    def is_table_empty(self, table_name):
+    def is_table_empty(self, table_name:str)->bool:
+        """Checks if the following table is empty or not
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.is_table_empty('response_Dell_Notebook')
+
+        Args:
+            table_name (str): Name of the table
+
+        Returns:
+            bool: Boolean if empty or not
+        """                
         try:
             self.cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
             count = self.cursor.fetchone()[0]
@@ -399,7 +432,20 @@ class SqlHandle:
             print(f"Error checking if table '{table_name}' is empty: {e}")
             return False
 
-    def get_last_respondent_ID(self, table_name):
+    def get_last_respondent_ID(self, table_name:str):
+        """Checks the number of respondents ID-s assuming 1 incremention during surveying process
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.get_last_respondent_ID('response_Dell_Notebook')
+
+        Args:
+            table_name (str): Name of the table
+
+        Returns:
+            int: Last Respondent's ID as int
+        """        
         try:
             self.cursor.execute(f"SELECT MAX(Respondent_ID) FROM {table_name}")
             last_respondent_ID = self.cursor.fetchone()[0]
@@ -411,11 +457,31 @@ class SqlHandle:
             return None
 
 
-    def sql_to_pandas(self, query):
+    def sql_to_pandas(self, query:str)->pd.DataFrame:
+        """Reads the table into pandas dataframe
+
+        Args:
+            query (str): query to be executed 
+
+        Returns:
+            pd.DataFrame: the dataframe of table
+        """            
         df = pd.read_sql_query(query, self.connection)
         logger.info('SQL To Pandas')
         return df
 
-    def pandas_to_sql(self, df, table_name, if_exists='replace'):
+    def pandas_to_sql(self, df:pd.DataFrame, table_name:str, if_exists='replace'):
+        """Function that gives the opportunity to push dataframe into the DataBase
+
+        Examples:
+            >>> from BWS.database.db_interactions import SqlHandle
+            >>> inst = SqlHandle()
+            >>> inst.pandas_to_sql(df_analysis_dell_notebook, 'analysis_Dell_Notebook')
+
+        Args:
+            df (pd.DataFrame): _description_
+            table_name (str): _description_
+            if_exists (str, optional): If the table exists then updates. Defaults to 'replace'.
+        """        
         df.to_sql(table_name, self.connection, if_exists=if_exists, index=False)
         logger.info("Pandas To SQL")

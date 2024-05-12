@@ -37,6 +37,16 @@ async def select_age_range(Age_Range: str = Query(..., description="Please selec
     - 26-35: 26-35,
     - 36-45: 36-45,
     - Above 45: >45
+
+    Args:
+        Age_Range (str, optional): _description_. Defaults to Query(..., description="Please select your age range from the options provided above").
+
+    Raises:
+        HTTPException: _description_
+        HTTPException: _description_
+
+    Returns:
+        dict: Clarification
     """
     global demographics_changed
 
@@ -73,6 +83,16 @@ async def select_gender(Gender: str = Query(..., description="Please select your
     Gender:
     - Female
     - Male
+
+    Args:
+        Gender (str, optional): _description_. Defaults to Query(..., description="Please select your gender").
+
+    Raises:
+        HTTPException: _description_
+        HTTPException: _description_
+
+    Returns:
+        dict: Clarification
     """
     global demographics_changed
 
@@ -96,6 +116,15 @@ last_task_id = None
 async def get_current_task():
     """
     Retrieve attributes for the current task and allow users to select best and worst attributes.
+
+    Raises:
+        HTTPException: _description_
+        HTTPException: _description_
+        HTTPException: _description_
+        HTTPException: _description_
+
+    Returns:
+        _type_: _description_
     """
     global current_task, last_task_id, task_attributes_entered
 
@@ -163,6 +192,20 @@ async def get_current_task():
 async def select_task_attributes(best_attribute: str = Query(...), worst_attribute: str = Query(...)):
     """
     Allow users to select best and worst attributes for the current task.
+
+    Args:
+        best_attribute (str, optional): _description_. Defaults to Query(...).
+        worst_attribute (str, optional): _description_. Defaults to Query(...).
+
+    Raises:
+        HTTPException: _description_
+        HTTPException: _description_
+        HTTPException: _description_
+        HTTPException: _description_
+        HTTPException: _description_
+
+    Returns:
+        dict: Dictionary containing the best and worst selected attributes by the user
     """
     global last_task_id, task_attributes_entered
 

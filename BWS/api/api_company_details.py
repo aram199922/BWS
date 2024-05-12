@@ -10,6 +10,14 @@ async def inserting_attributes(Company: str, Product: str, Attributes: list[str]
     Please provide your company's name, product and its attributes.
 
     Example of attributes format: ["Attribute1", "Attribute2", "Attribute3"]
+
+    Args:
+        Company (str): Name of the company
+        Product (str): Name of the product
+        Attributes (list[str]): List of attributes characterizing the product
+
+    Returns:
+        str: Clarification
     """
     column_name = f"{Company}__{Product}"
     inst.insert_attributes(column_name, Attributes)
