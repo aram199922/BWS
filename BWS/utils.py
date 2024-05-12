@@ -28,7 +28,7 @@ nIt = 'number_of_items'
 # Number of the overall attributes
 nAttr = 'number_of_attributes'
 
-inst3= SqlHandle()
+# inst3 = SqlHandle()
 
 def design_creation(attributes):
     """
@@ -40,7 +40,10 @@ def design_creation(attributes):
     Returns:
     json: json file of the survey.
     """
+    inst3 = SqlHandle()
+
     master_design = inst3.read_table('Master_Design')
+    inst3.close()
 
     # Number of attributes.
     attribute_count = len(set(attributes))

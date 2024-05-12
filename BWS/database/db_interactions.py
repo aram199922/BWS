@@ -156,7 +156,7 @@ class SqlHandle:
             result = self.cursor.fetchall()
             if result:
                 attributes = [row[0] for row in result]
-                logger.info('Attrbiutes has been found')
+                logger.info('Attributes have been found')
                 return attributes
             else:
                 print(f"No attributes found for column: {column_name}")
