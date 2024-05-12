@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Modelling - BWS Docs</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Modelling";
+        var mkdocs_page_input_path = "Model.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> BWS Docs
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../add/">Addtion</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../API/">API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SQL/">SQL</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Modelling</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.model.analysis">analysis</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.model.analysis.get_survey_design">get_survey_design</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.model.analysis.push_analysis1">push_analysis1</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.model.analysis.push_analysis2">push_analysis2</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.model.analysis.push_analysis3">push_analysis3</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.model.analysis.push_survey_design">push_survey_design</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">BWS Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Modelling</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="documentation-of-analysis-functions">Documentation of Analysis functions</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="BWS.model.analysis"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.model.analysis.get_survey_design" class="doc doc-heading">
+          <code class="highlight language-python">get_survey_design(column_name)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Getting SurveyDesign</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.model.analysis import get_survey_design
+&gt;&gt;&gt; get_survey_design("Cisco_Router")</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>column_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The companie's product for which we want to create survey design</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
+            –
+            <div class="doc-md-description">
+              <p>pd.DataFrame: Dataframe containing the structure of the survey (how it will be conducted)</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\model\analysis.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_survey_design(column_name:str)-&gt;pd.DataFrame:
+    """Getting SurveyDesign
+
+    Examples:
+        &gt;&gt;&gt; from BWS.model.analysis import get_survey_design
+        &gt;&gt;&gt; get_survey_design("Cisco_Router")
+
+    Args:
+        column_name (str): The companie's product for which we want to create survey design
+
+    Returns:
+        pd.DataFrame: Dataframe containing the structure of the survey (how it will be conducted)
+    """
+    inst = SqlHandle()
+    # Assuming the column name is already sanitized
+    column_data = inst.get_attributes(column_name)
+
+    if column_data:
+        # Extract values from tuples and handle NaN values
+        column_values = column_data
+    else:
+        print("No attributes found for the specified column.")
+        column_values = []
+        inst.close()
+        return
+    # Pass the column values to the design_creation function
+    if column_values:
+        survey_design = utils.design_creation(column_values)
+    else:
+        print("No attributes found for the specified column.")
+        # Handle the case where no attributes are found for the specified column
+        inst.close()
+        return
+
+    inst.close()
+    return survey_design</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.model.analysis.push_analysis1" class="doc doc-heading">
+          <code class="highlight language-python">push_analysis1(product_name)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse and push to DB 1</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.model.analysis import push_analysis1
+&gt;&gt;&gt; push_analysis1("Cisco_Router")</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>product_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Name of the product, which responses are going to be analyzed</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\model\analysis.py</code></summary>
+            <pre class="highlight"><code class="language-python">def push_analysis1(product_name:str):
+    """Analyse and push to DB 1
+
+    Examples:
+        &gt;&gt;&gt; from BWS.model.analysis import push_analysis1
+        &gt;&gt;&gt; push_analysis1("Cisco_Router")
+
+    Args:
+        product_name (str): Name of the product, which responses are going to be analyzed
+    """
+
+    inst = SqlHandle()
+
+    data = inst.read_table(f"response_{product_name}") 
+    data.drop(columns=['id'], inplace=True) 
+    result = utils.output_1_simple_demographic(data) 
+    inst.pandas_to_sql(result, f"analysis1_{product_name}")
+    inst.close() 
+    return</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.model.analysis.push_analysis2" class="doc doc-heading">
+          <code class="highlight language-python">push_analysis2(product_name)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse and push to DB 2</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.model.analysis import push_analysis2
+&gt;&gt;&gt; push_analysis2("Cisco_Router")</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>product_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Name of the product, which responses are going to be analyzed</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\model\analysis.py</code></summary>
+            <pre class="highlight"><code class="language-python">def push_analysis2(product_name:str):
+    """Analyse and push to DB 2
+
+    Examples:
+        &gt;&gt;&gt; from BWS.model.analysis import push_analysis2
+        &gt;&gt;&gt; push_analysis2("Cisco_Router")
+
+    Args:
+        product_name (str): Name of the product, which responses are going to be analyzed
+    """
+
+    inst = SqlHandle()
+
+    data = inst.read_table(f"response_{product_name}") 
+    data.drop(columns=['id'], inplace=True) 
+    result = utils.output_2_general_importance_plot_df(data) 
+    inst.pandas_to_sql(result, f"analysis2_{product_name}") 
+    inst.close()
+    return</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.model.analysis.push_analysis3" class="doc doc-heading">
+          <code class="highlight language-python">push_analysis3(product_name)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse and push to DB 3</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.model.analysis import push_analysis3
+&gt;&gt;&gt; push_analysis3("Cisco_Router")</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>product_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Name of the product, which responses are going to be analyzed</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\model\analysis.py</code></summary>
+            <pre class="highlight"><code class="language-python">def push_analysis3(product_name:str):
+    """Analyse and push to DB 3
+
+    Examples:
+        &gt;&gt;&gt; from BWS.model.analysis import push_analysis3
+        &gt;&gt;&gt; push_analysis3("Cisco_Router")
+
+    Args:
+        product_name (str): Name of the product, which responses are going to be analyzed
+    """
+
+    inst = SqlHandle()
+
+    data = inst.read_table(f"response_{product_name}") 
+    data.drop(columns=['id'], inplace=True) 
+    result = utils.output_3_4_importance_by_demographic(data) 
+    inst.pandas_to_sql(result, f"analysis3_{product_name}")
+    inst.close()
+    return</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="BWS.model.analysis.push_survey_design" class="doc doc-heading">
+          <code class="highlight language-python">push_survey_design(column_name, survey_design)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Pushing the Survey Design into the database</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.model.analysis import push_survey_design, get_survey_design
+&gt;&gt;&gt; push_survey_design("Cisco_Router", get_survey_design("Cisco_Router"))</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>column_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The companie's product</p>
+              </div>
+            </li>
+            <li>
+              <b><code>survey_design</code></b>
+                  (<code><span title="pandas.DataFrame">DataFrame</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Dataframe containing the structure of the survey (how it will be conducted)</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\model\analysis.py</code></summary>
+            <pre class="highlight"><code class="language-python">def push_survey_design(column_name:str,survey_design:pd.DataFrame):
+    """Pushing the Survey Design into the database
+
+    Examples:
+        &gt;&gt;&gt; from BWS.model.analysis import push_survey_design, get_survey_design
+        &gt;&gt;&gt; push_survey_design("Cisco_Router", get_survey_design("Cisco_Router"))
+
+    Args:
+        column_name (str): The companie's product
+        survey_design (pd.DataFrame): Dataframe containing the structure of the survey (how it will be conducted)
+    """
+    inst = SqlHandle()
+
+    table_name = f"survey_{column_name}"
+    inst.pandas_to_sql(survey_design, table_name)
+    inst.close()
+    return</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../SQL/" class="btn btn-neutral float-left" title="SQL"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../SQL/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>SQL - BWS Docs</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "SQL";
+        var mkdocs_page_input_path = "SQL.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> BWS Docs
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../add/">Addtion</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../API/">API</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">SQL</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.database.db_interactions">db_interactions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle">SqlHandle</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.__init__">__init__</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.close">close</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.create_database">create_database</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.get_attributes">get_attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.get_row_from_survey">get_row_from_survey</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.insert_attributes">insert_attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.insert_rows">insert_rows</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.push_flat_file_to_database">push_flat_file_to_database</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.read_table">read_table</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.remove_column_or_row">remove_column_or_row</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#BWS.database.db_interactions.SqlHandle.store_response">store_response</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Model/">Modelling</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">BWS Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">SQL</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="documentation-of-sql-functions">Documentation of SQL functions</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="BWS.database.db_interactions"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="BWS.database.db_interactions.SqlHandle" class="doc doc-heading">
+          <code>SqlHandle</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Class with all the methods for interacting with the database</p>
+
+            <details class="quote">
+              <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+              <pre class="highlight"><code class="language-python">class SqlHandle:
+    """
+    Class with all the methods for interacting with the database
+
+    """    
+    def __init__(self, db_name="testDB.db"):
+        """Creating the instance of db connection
+
+        Examples:
+            &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+            &gt;&gt;&gt; inst = SqlHandle()
+
+        Args:
+            db_name (str, optional): _description_. Defaults to "testDB.db".
+        """        
+        self.db_name = db_name
+        self.connection = sqlite3.connect(db_name)
+        self.cursor = self.connection.cursor()
+
+    def close(self):
+        """Function which will close the connection
+
+        Examples:
+            &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+            &gt;&gt;&gt; inst = SqlHandle()
+            &gt;&gt;&gt; inst.close()
+        """        
+        self.connection.close()
+        logger.info('the connection has been closed')
+
+    def create_database(self):
+        """Function for creating the db
+
+        """        
+        if not os.path.exists(self.db_name):
+            logger.info('Database has been created')
+            print("Database created successfully.")
+            logger.info('Database has been created')
+        else:
+            print("Database already exists.")
+            logger.warning('You are trying to create a database that already exists')
+
+
+    def push_flat_file_to_database(self, file_name, table_name:str):
+        """Function for pushing flat files to the database
+
+        Examples:
+            &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+            &gt;&gt;&gt; inst = SqlHandle()
+            &gt;&gt;&gt; inst.push_flat_file_to_database('master_design.csv', 'Master_Design')
+
+        Args:
+            file_name (_type_): name of the file
+            table_name (str): name of the table that is going to be created
+        """        
+        if os.path.exists(file_name):
+            try:
+                with open(file_name, 'rb') as f:
+                    df = pd.read_csv(f, encoding='utf-8')
+                    self.pandas_to_sql(df, table_name)  # Remove if_exists argument
+                    print(f"Data from file '{file_name}' appended to SQL table: {table_name}")
+            except Exception as e:
+                print(f"Error reading file '{file_name}': {e}")
+                logger.info('File has been pushed')
+        else:
+            print(f"File '{file_name}' not found.")
+            logger.warning('The file you are trying to push cannot be found')
+
+
+    def insert_attributes(self, column_name:str, values_list:list)-&gt;str:
+        """Function for inserting the attributes
+
+        Examples:
+            &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+            &gt;&gt;&gt; inst = SqlHandle()
+            &gt;&gt;&gt; inst.insert_attributes('Dell_Notebook', ['Screen','Ram','VideoCard'])
+
+        Args:
+            column_name (str): name of company product
+            values_list (list): list of attributes
+
+        Returns:
+            str: clarification
+        """          
+        try:
+            column_name = column_name.replace(" ", "_")
+            self.cursor.execute("CREATE TABLE IF NOT EXISTS Attributes (rowid INTEGER PRIMARY KEY)")
+            self.cursor.execute("PRAGMA table_info(Attributes)")
+            columns = [row[1] for row in self.cursor.fetchall()]
+            logger.info('Attributes table has been created')
+
+            if column_name not in columns:
+                # If the column doesn't exist, create it
+                self.cursor.execute(f"ALTER TABLE Attributes ADD COLUMN {column_name} TEXT")
+
+            # Get the rowids of rows where the column value is NULL
+            self.cursor.execute(f"SELECT rowid FROM Attributes WHERE {column_name} IS NULL")
+            null_rows = self.cursor.fetchall()
+
+            for i, value in enumerate(values_list):
+                if i &lt; len(null_rows):
+                    rowid = null_rows[i][0]
+                    self.cursor.execute(f"UPDATE Attributes SET {column_name} = ? WHERE rowid = ?", (value, rowid))
+                    logger.info('Parameters has been pushed to the Attributes table successfully')
+                else:
+                    # If there are no more NULL rows, insert a new row
+                    self.cursor.execute(f"INSERT INTO Attributes DEFAULT VALUES")
+                    rowid = self.cursor.lastrowid
+                    self.cursor.execute(f"UPDATE Attributes SET {column_name} = ? WHERE rowid = ?", (value, rowid))
+            logger.info('Parameters has been pushed to the Attributes table successfully')
+            self.connection.commit()
+            return "Data inserted successfully"
+
+
+        except sqlite3.Error as e:
+            print(f"Error inserting attributes for column: {column_name} - {e}")
+            logging.warning('Error, recheck the values you are trying to insert')
+            return "Error inserting attributes"
+
+    def get_attributes(self, column_name:str)-&gt;list:
+        """Getting the desired attribute list
+
+        Examples:
+            &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+            &gt;&gt;&gt; inst = SqlHandle()
+            &gt;&gt;&gt; inst.get_attributes('Dell_Notebook')
+
+        Args:
+            column_name (str): name of the column
+
+        Returns:
+            list: list of the column values
+        """        
+        try:
+            self.cursor.execute(f"SELECT {column_name} FROM Attributes WHERE {column_name} IS NOT NULL")
+            result = self.cursor.fetchall()
+            if result:
+                attributes = [row[0] for row in result]
+                logger.info('Attributes have been found')
+                return attributes
+            else:
+                print(f"No attributes found for column: {column_name}")
+                return None
+        except sqlite3.Error as e:
+            print(f"Error fetching attributes for column: {column_name} - {e}")
+            logging.error('Error, attributes cannot be found')
+            return None
+
+    def read_table(self, table_name:str)-&gt;pd.DataFrame:
+        """Return the table in dataframe format
+
+        Examples:
+            &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+            &gt;&gt;&gt; inst = SqlHandle()
+            &gt;&gt;&gt; inst.read_table('Master_Design')
+
+        Args:
+            table_name (str): name of the table
+
+        Returns:
+            pd.DataFrame: dataframe of the table
+        """
+        # Read the table into a pandas DataFrame
+        df = pd.read_sql_query(f"SELECT * FROM {table_name}", self.connection)
+        logger.info('Table has been shown')
+        return df
+
+
+    def insert_rows(self, table_name:str, df:pd.DataFrame)-&gt;str:
+        """Inserting rows into the table
+
+        Examples:
+            &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+            &gt;&gt;&gt; inst = SqlHandle()
+            &gt;&gt;&gt; inst.insert_rows('Response_Dell_Notebook', responses)
+
+        Args:
+            table_name (str): Name of the table
+            df (pd.DataFrame): dataframe which rows are going to be inserted
+
+        Returns:
+            str: clarification
+        """    
+        try:
+            # Get the number of columns in the table
+            self.cursor.execute(f"PRAGMA table_info({table_name})")
+            table_columns = [row[1] for row in self.cursor.fetchall()]
+            print("Table Columns:", table_columns)  # Add this line
+
+            # Check if the number of columns in the DataFrame matches the number of columns in the table
+            print("DataFrame Columns:", df.columns)  # Add this line
+            if len(df.columns) != len(table_columns):
+                logger.error(f"Number of columns in DataFrame ({len(df.columns)}) doesn't match the number of columns in the table ({len(table_columns)}).")
+                return f"Number of columns in DataFrame ({len(df.columns)}) doesn't match the number of columns in the table ({len(table_columns)})."
+
+            # Convert all values in the DataFrame to strings
+            df = df.applymap(str)
+
+            # Check for non-convertible values
+            for column in df.columns:
+                if not df[column].apply(lambda x: isinstance(x, str)).all():
+                    logger.error("Non-convertible values found in column")
+                    return f"Non-convertible values found in column '{column}'."
+
+            # Insert data into the specified table
+            self.cursor.executemany(f"INSERT INTO {table_name} VALUES ({','.join(['?' for _ in range(len(table_columns))])})", df.values.tolist())
+            logger.info("Rows were inserted successfully!")
+            self.connection.commit()
+
+            return "Rows inserted successfully."
+        except sqlite3.Error as e:
+            logger.error("You have error when inserting rows into table")
+            return f"Error inserting rows into table {table_name}: {e}"
+
+    def remove_column_or_row(self, column_name:str, to_remove:str):
+        """Removing column or row from table Attributes
+        If the same values will delete column else only the value of the column
+
+        Examples:
+            &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+            &gt;&gt;&gt; inst = SqlHandle()
+            &gt;&gt;&gt; inst.remove_column_or_row('Dell_Notebook', 'Screen')
+            &gt;&gt;&gt; inst.remove_column_or_row('Dell_Notebook', 'Dell_Notebook')
+
+        Args:
+            column_name (str): name of the column
+            to_remove (str): remove whole column or value in it
+        """        
+        try:
+            # Check if column exists in the table schema
+            self.cursor.execute(f"PRAGMA table_info(Attributes)")
+            columns = [row[1] for row in self.cursor.fetchall()]
+
+            # Check if 'column_name' exists in the table
+            if column_name not in columns:
+                print(f"Column '{column_name}' does not exist in the table.")
+                logger.warning('The columns you are trying to remove doesnt exist in the table')
+                return
+
+            # Check if 'to_remove' is a valid value
+            if to_remove in columns:
+                # Remove the entire column specified by 'to_remove'
+                self.cursor.execute(f"ALTER TABLE Attributes DROP COLUMN {to_remove}")
+                print(f"Column '{to_remove}' removed successfully.")
+                logger.info("The column(s) where removed")
+            else:
+                # Remove the entire row where the specified value is located
+                self.cursor.execute(f"DELETE FROM Attributes WHERE {column_name} = ?", (to_remove,))
+                print(f"Row with value '{to_remove}' from column '{column_name}' removed successfully.")
+                logger("The operation has been completed successfully")
+
+            self.connection.commit()
+        except sqlite3.Error as e:
+            print(f"Error removing '{to_remove}': {e}")
+            logger.error('Error while trying to remove the specifed column/row')
+
+
+    def get_row_from_survey(self, table_name:str, index:int, block:int)-&gt;tuple:
+        """Getting row (question) from the survey
+
+        Examples:
+            &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+            &gt;&gt;&gt; inst = SqlHandle()
+            &gt;&gt;&gt; inst.get_row_from_survey('Response_Dell_Notebook', 1, 2)
+
+        Args:
+            table_name (str): name of the survey table
+            index (int): index of row to get
+            block (int): from which block of questions to get
+
+        Returns:
+            tuple: tuple containing row values
+        """
+        try:
+        # Execute query to fetch the row based on index and block
+            self.cursor.execute(f"SELECT * FROM {table_name} WHERE block = ? LIMIT 1 OFFSET ?", (block, index,))
+            row = self.cursor.fetchone()
+            if row:
+                logger.info("The row from survey has imported successfully")
+                return row  # Return tuple containing row values
+            else:
+                print(f"No row found at index {index} and block {block} in table {table_name}")
+                logger.warning("Row is not found")
+                return None
+        except sqlite3.Error as e:
+            print(f"Error fetching row from table {table_name}: {e}")
+            logger.error("Error, make sure you filled everything correctly")
+            return None
+
+    def store_response(self, table_name:str, Respondent_ID:int, Attributes:list, Best_Attribute:str, Worst_Attribute:str, Block:int, Task:int, Age_Range:str, Gender:str):
+        """After getting the answer store it in the response table
+
+        Args:
+            table_name (str): name of the table to store the data
+            Respondent_ID (int): _description_
+            Attributes (list): _description_
+            Best_Attribute (str): _description_
+            Worst_Attribute (str): _description_
+            Block (int): _description_
+            Task (int): _description_
+            Age_Range (str): _description_
+            Gender (str): _description_
+
+        Raises:
+            e: _description_
+        """        
+        try:
+            for Attribute in Attributes:
+                Response = 0
+                if Attribute == Best_Attribute:
+                    Response = 1
+                    logger.info("The best Attribute is stored")
+                elif Attribute == Worst_Attribute:
+                    Response = -1
+                    logger.info("The worst Attribute is stored")
+
+                # Construct the INSERT query with the provided column name and table name
+                insert_query = f"INSERT INTO {table_name} (Response, Attribute, Respondent_ID, Block, Task, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                self.cursor.execute(insert_query, (Response, Attribute, Respondent_ID, Block, Task, Age_Range, Gender))
+
+            self.connection.commit()
+            logger.info('Operation completed successfully')
+        except Exception as e:
+            self.connection.rollback()
+            logger.warning("Make sure you filled everything correctly")
+            raise e
+
+
+
+    def create_response_table(self, table_name):
+        create_table_query = f"""
+        CREATE TABLE IF NOT EXISTS {table_name} (
+            id INTEGER PRIMARY KEY,
+            Respondent_ID INTEGER,
+            Attribute TEXT,
+            Block INTEGER,
+            Task INTEGER,
+            Response INTEGER,
+            Age_Range TEXT,
+            Gender TEXT
+        )
+        """
+        self.cursor.execute(create_table_query)
+        self.connection.commit()
+        logger.info('Table created successfully')
+
+    def update_product_name(self, company: str, old_product: str, new_product: str):
+        try:
+            # Construct the column name based on the provided company and product
+            column_name = f"{company}__{old_product}"
+
+            # Check if the column exists in the Attributes table
+            self.cursor.execute("PRAGMA table_info(Attributes)")
+            columns = [row[1] for row in self.cursor.fetchall()]
+            if column_name not in columns:
+                logger.warning('The specifed column does not exist')
+                return f"Column '{column_name}' does not exist."
+
+        # Construct the SQL query to update the column name to the new product name
+            query = f"ALTER TABLE Attributes RENAME COLUMN {column_name} TO {company}__{new_product}"
+
+        # Execute the SQL query to update the column name
+            self.cursor.execute(query)
+            self.connection.commit()
+            logger.info("Product name updated successfully")
+            return f"Product name updated successfully from '{old_product}' to '{new_product}'."
+        except sqlite3.Error as e:
+            self.connection.rollback()
+            logger.error('Error make sure you filled everything correctly')
+            return f"Error updating product name: {e}"
+
+    def is_table_empty(self, table_name):
+        try:
+            self.cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
+            count = self.cursor.fetchone()[0]
+            logger.info('The information about the table recieved successfully')
+            return count == 0
+        except sqlite3.Error as e:
+            print(f"Error checking if table '{table_name}' is empty: {e}")
+            return False
+
+    def get_last_respondent_ID(self, table_name):
+        try:
+            self.cursor.execute(f"SELECT MAX(Respondent_ID) FROM {table_name}")
+            last_respondent_ID = self.cursor.fetchone()[0]
+            logger.info("The operation completed successfully")
+            return last_respondent_ID
+        except sqlite3.Error as e:
+            print(f"Error fetching last Respondent ID from table '{table_name}': {e}")
+            logger.error("Error recheck the inserted data")
+            return None
+
+
+    def sql_to_pandas(self, query):
+        df = pd.read_sql_query(query, self.connection)
+        logger.info('SQL To Pandas')
+        return df
+
+    def pandas_to_sql(self, df, table_name, if_exists='replace'):
+        df.to_sql(table_name, self.connection, if_exists=if_exists, index=False)
+        logger.info("Pandas To SQL")</code></pre>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.__init__" class="doc doc-heading">
+          <code class="highlight language-python">__init__(db_name='testDB.db')</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Creating the instance of db connection</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+&gt;&gt;&gt; inst = SqlHandle()</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>db_name</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;testDB.db&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em>. Defaults to "testDB.db".</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def __init__(self, db_name="testDB.db"):
+    """Creating the instance of db connection
+
+    Examples:
+        &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+        &gt;&gt;&gt; inst = SqlHandle()
+
+    Args:
+        db_name (str, optional): _description_. Defaults to "testDB.db".
+    """        
+    self.db_name = db_name
+    self.connection = sqlite3.connect(db_name)
+    self.cursor = self.connection.cursor()</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.close" class="doc doc-heading">
+          <code class="highlight language-python">close()</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Function which will close the connection</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+&gt;&gt;&gt; inst = SqlHandle()
+&gt;&gt;&gt; inst.close()</code></pre>
+
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def close(self):
+    """Function which will close the connection
+
+    Examples:
+        &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+        &gt;&gt;&gt; inst = SqlHandle()
+        &gt;&gt;&gt; inst.close()
+    """        
+    self.connection.close()
+    logger.info('the connection has been closed')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.create_database" class="doc doc-heading">
+          <code class="highlight language-python">create_database()</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Function for creating the db</p>
+
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def create_database(self):
+    """Function for creating the db
+
+    """        
+    if not os.path.exists(self.db_name):
+        logger.info('Database has been created')
+        print("Database created successfully.")
+        logger.info('Database has been created')
+    else:
+        print("Database already exists.")
+        logger.warning('You are trying to create a database that already exists')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.get_attributes" class="doc doc-heading">
+          <code class="highlight language-python">get_attributes(column_name)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Getting the desired attribute list</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+&gt;&gt;&gt; inst = SqlHandle()
+&gt;&gt;&gt; inst.get_attributes('Dell_Notebook')</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>column_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>name of the column</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>list</code></b>(                <code>list</code>
+)            –
+            <div class="doc-md-description">
+              <p>list of the column values</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_attributes(self, column_name:str)-&gt;list:
+    """Getting the desired attribute list
+
+    Examples:
+        &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+        &gt;&gt;&gt; inst = SqlHandle()
+        &gt;&gt;&gt; inst.get_attributes('Dell_Notebook')
+
+    Args:
+        column_name (str): name of the column
+
+    Returns:
+        list: list of the column values
+    """        
+    try:
+        self.cursor.execute(f"SELECT {column_name} FROM Attributes WHERE {column_name} IS NOT NULL")
+        result = self.cursor.fetchall()
+        if result:
+            attributes = [row[0] for row in result]
+            logger.info('Attributes have been found')
+            return attributes
+        else:
+            print(f"No attributes found for column: {column_name}")
+            return None
+    except sqlite3.Error as e:
+        print(f"Error fetching attributes for column: {column_name} - {e}")
+        logging.error('Error, attributes cannot be found')
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.get_row_from_survey" class="doc doc-heading">
+          <code class="highlight language-python">get_row_from_survey(table_name, index, block)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Getting row (question) from the survey</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+&gt;&gt;&gt; inst = SqlHandle()
+&gt;&gt;&gt; inst.get_row_from_survey('Response_Dell_Notebook', 1, 2)</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>table_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>name of the survey table</p>
+              </div>
+            </li>
+            <li>
+              <b><code>index</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>index of row to get</p>
+              </div>
+            </li>
+            <li>
+              <b><code>block</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>from which block of questions to get</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>tuple</code></b>(                <code>tuple</code>
+)            –
+            <div class="doc-md-description">
+              <p>tuple containing row values</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_row_from_survey(self, table_name:str, index:int, block:int)-&gt;tuple:
+    """Getting row (question) from the survey
+
+    Examples:
+        &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+        &gt;&gt;&gt; inst = SqlHandle()
+        &gt;&gt;&gt; inst.get_row_from_survey('Response_Dell_Notebook', 1, 2)
+
+    Args:
+        table_name (str): name of the survey table
+        index (int): index of row to get
+        block (int): from which block of questions to get
+
+    Returns:
+        tuple: tuple containing row values
+    """
+    try:
+    # Execute query to fetch the row based on index and block
+        self.cursor.execute(f"SELECT * FROM {table_name} WHERE block = ? LIMIT 1 OFFSET ?", (block, index,))
+        row = self.cursor.fetchone()
+        if row:
+            logger.info("The row from survey has imported successfully")
+            return row  # Return tuple containing row values
+        else:
+            print(f"No row found at index {index} and block {block} in table {table_name}")
+            logger.warning("Row is not found")
+            return None
+    except sqlite3.Error as e:
+        print(f"Error fetching row from table {table_name}: {e}")
+        logger.error("Error, make sure you filled everything correctly")
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.insert_attributes" class="doc doc-heading">
+          <code class="highlight language-python">insert_attributes(column_name, values_list)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Function for inserting the attributes</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+&gt;&gt;&gt; inst = SqlHandle()
+&gt;&gt;&gt; inst.insert_attributes('Dell_Notebook', ['Screen','Ram','VideoCard'])</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>column_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>name of company product</p>
+              </div>
+            </li>
+            <li>
+              <b><code>values_list</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>list of attributes</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>clarification</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def insert_attributes(self, column_name:str, values_list:list)-&gt;str:
+    """Function for inserting the attributes
+
+    Examples:
+        &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+        &gt;&gt;&gt; inst = SqlHandle()
+        &gt;&gt;&gt; inst.insert_attributes('Dell_Notebook', ['Screen','Ram','VideoCard'])
+
+    Args:
+        column_name (str): name of company product
+        values_list (list): list of attributes
+
+    Returns:
+        str: clarification
+    """          
+    try:
+        column_name = column_name.replace(" ", "_")
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS Attributes (rowid INTEGER PRIMARY KEY)")
+        self.cursor.execute("PRAGMA table_info(Attributes)")
+        columns = [row[1] for row in self.cursor.fetchall()]
+        logger.info('Attributes table has been created')
+
+        if column_name not in columns:
+            # If the column doesn't exist, create it
+            self.cursor.execute(f"ALTER TABLE Attributes ADD COLUMN {column_name} TEXT")
+
+        # Get the rowids of rows where the column value is NULL
+        self.cursor.execute(f"SELECT rowid FROM Attributes WHERE {column_name} IS NULL")
+        null_rows = self.cursor.fetchall()
+
+        for i, value in enumerate(values_list):
+            if i &lt; len(null_rows):
+                rowid = null_rows[i][0]
+                self.cursor.execute(f"UPDATE Attributes SET {column_name} = ? WHERE rowid = ?", (value, rowid))
+                logger.info('Parameters has been pushed to the Attributes table successfully')
+            else:
+                # If there are no more NULL rows, insert a new row
+                self.cursor.execute(f"INSERT INTO Attributes DEFAULT VALUES")
+                rowid = self.cursor.lastrowid
+                self.cursor.execute(f"UPDATE Attributes SET {column_name} = ? WHERE rowid = ?", (value, rowid))
+        logger.info('Parameters has been pushed to the Attributes table successfully')
+        self.connection.commit()
+        return "Data inserted successfully"
+
+
+    except sqlite3.Error as e:
+        print(f"Error inserting attributes for column: {column_name} - {e}")
+        logging.warning('Error, recheck the values you are trying to insert')
+        return "Error inserting attributes"</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.insert_rows" class="doc doc-heading">
+          <code class="highlight language-python">insert_rows(table_name, df)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Inserting rows into the table</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+&gt;&gt;&gt; inst = SqlHandle()
+&gt;&gt;&gt; inst.insert_rows('Response_Dell_Notebook', responses)</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>table_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Name of the table</p>
+              </div>
+            </li>
+            <li>
+              <b><code>df</code></b>
+                  (<code><span title="pandas.DataFrame">DataFrame</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>dataframe which rows are going to be inserted</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>clarification</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def insert_rows(self, table_name:str, df:pd.DataFrame)-&gt;str:
+    """Inserting rows into the table
+
+    Examples:
+        &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+        &gt;&gt;&gt; inst = SqlHandle()
+        &gt;&gt;&gt; inst.insert_rows('Response_Dell_Notebook', responses)
+
+    Args:
+        table_name (str): Name of the table
+        df (pd.DataFrame): dataframe which rows are going to be inserted
+
+    Returns:
+        str: clarification
+    """    
+    try:
+        # Get the number of columns in the table
+        self.cursor.execute(f"PRAGMA table_info({table_name})")
+        table_columns = [row[1] for row in self.cursor.fetchall()]
+        print("Table Columns:", table_columns)  # Add this line
+
+        # Check if the number of columns in the DataFrame matches the number of columns in the table
+        print("DataFrame Columns:", df.columns)  # Add this line
+        if len(df.columns) != len(table_columns):
+            logger.error(f"Number of columns in DataFrame ({len(df.columns)}) doesn't match the number of columns in the table ({len(table_columns)}).")
+            return f"Number of columns in DataFrame ({len(df.columns)}) doesn't match the number of columns in the table ({len(table_columns)})."
+
+        # Convert all values in the DataFrame to strings
+        df = df.applymap(str)
+
+        # Check for non-convertible values
+        for column in df.columns:
+            if not df[column].apply(lambda x: isinstance(x, str)).all():
+                logger.error("Non-convertible values found in column")
+                return f"Non-convertible values found in column '{column}'."
+
+        # Insert data into the specified table
+        self.cursor.executemany(f"INSERT INTO {table_name} VALUES ({','.join(['?' for _ in range(len(table_columns))])})", df.values.tolist())
+        logger.info("Rows were inserted successfully!")
+        self.connection.commit()
+
+        return "Rows inserted successfully."
+    except sqlite3.Error as e:
+        logger.error("You have error when inserting rows into table")
+        return f"Error inserting rows into table {table_name}: {e}"</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.push_flat_file_to_database" class="doc doc-heading">
+          <code class="highlight language-python">push_flat_file_to_database(file_name, table_name)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Function for pushing flat files to the database</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+&gt;&gt;&gt; inst = SqlHandle()
+&gt;&gt;&gt; inst.push_flat_file_to_database('master_design.csv', 'Master_Design')</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>file_name</code></b>
+                  (<code>_type_</code>)
+              –
+              <div class="doc-md-description">
+                <p>name of the file</p>
+              </div>
+            </li>
+            <li>
+              <b><code>table_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>name of the table that is going to be created</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def push_flat_file_to_database(self, file_name, table_name:str):
+    """Function for pushing flat files to the database
+
+    Examples:
+        &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+        &gt;&gt;&gt; inst = SqlHandle()
+        &gt;&gt;&gt; inst.push_flat_file_to_database('master_design.csv', 'Master_Design')
+
+    Args:
+        file_name (_type_): name of the file
+        table_name (str): name of the table that is going to be created
+    """        
+    if os.path.exists(file_name):
+        try:
+            with open(file_name, 'rb') as f:
+                df = pd.read_csv(f, encoding='utf-8')
+                self.pandas_to_sql(df, table_name)  # Remove if_exists argument
+                print(f"Data from file '{file_name}' appended to SQL table: {table_name}")
+        except Exception as e:
+            print(f"Error reading file '{file_name}': {e}")
+            logger.info('File has been pushed')
+    else:
+        print(f"File '{file_name}' not found.")
+        logger.warning('The file you are trying to push cannot be found')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.read_table" class="doc doc-heading">
+          <code class="highlight language-python">read_table(table_name)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Return the table in dataframe format</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+&gt;&gt;&gt; inst = SqlHandle()
+&gt;&gt;&gt; inst.read_table('Master_Design')</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>table_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>name of the table</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
+            –
+            <div class="doc-md-description">
+              <p>pd.DataFrame: dataframe of the table</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def read_table(self, table_name:str)-&gt;pd.DataFrame:
+    """Return the table in dataframe format
+
+    Examples:
+        &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+        &gt;&gt;&gt; inst = SqlHandle()
+        &gt;&gt;&gt; inst.read_table('Master_Design')
+
+    Args:
+        table_name (str): name of the table
+
+    Returns:
+        pd.DataFrame: dataframe of the table
+    """
+    # Read the table into a pandas DataFrame
+    df = pd.read_sql_query(f"SELECT * FROM {table_name}", self.connection)
+    logger.info('Table has been shown')
+    return df</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.remove_column_or_row" class="doc doc-heading">
+          <code class="highlight language-python">remove_column_or_row(column_name, to_remove)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Removing column or row from table Attributes
+If the same values will delete column else only the value of the column</p>
+
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+&gt;&gt;&gt; inst = SqlHandle()
+&gt;&gt;&gt; inst.remove_column_or_row('Dell_Notebook', 'Screen')
+&gt;&gt;&gt; inst.remove_column_or_row('Dell_Notebook', 'Dell_Notebook')</code></pre>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>column_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>name of the column</p>
+              </div>
+            </li>
+            <li>
+              <b><code>to_remove</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>remove whole column or value in it</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def remove_column_or_row(self, column_name:str, to_remove:str):
+    """Removing column or row from table Attributes
+    If the same values will delete column else only the value of the column
+
+    Examples:
+        &gt;&gt;&gt; from BWS.database.db_interactions import SqlHandle
+        &gt;&gt;&gt; inst = SqlHandle()
+        &gt;&gt;&gt; inst.remove_column_or_row('Dell_Notebook', 'Screen')
+        &gt;&gt;&gt; inst.remove_column_or_row('Dell_Notebook', 'Dell_Notebook')
+
+    Args:
+        column_name (str): name of the column
+        to_remove (str): remove whole column or value in it
+    """        
+    try:
+        # Check if column exists in the table schema
+        self.cursor.execute(f"PRAGMA table_info(Attributes)")
+        columns = [row[1] for row in self.cursor.fetchall()]
+
+        # Check if 'column_name' exists in the table
+        if column_name not in columns:
+            print(f"Column '{column_name}' does not exist in the table.")
+            logger.warning('The columns you are trying to remove doesnt exist in the table')
+            return
+
+        # Check if 'to_remove' is a valid value
+        if to_remove in columns:
+            # Remove the entire column specified by 'to_remove'
+            self.cursor.execute(f"ALTER TABLE Attributes DROP COLUMN {to_remove}")
+            print(f"Column '{to_remove}' removed successfully.")
+            logger.info("The column(s) where removed")
+        else:
+            # Remove the entire row where the specified value is located
+            self.cursor.execute(f"DELETE FROM Attributes WHERE {column_name} = ?", (to_remove,))
+            print(f"Row with value '{to_remove}' from column '{column_name}' removed successfully.")
+            logger("The operation has been completed successfully")
+
+        self.connection.commit()
+    except sqlite3.Error as e:
+        print(f"Error removing '{to_remove}': {e}")
+        logger.error('Error while trying to remove the specifed column/row')</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="BWS.database.db_interactions.SqlHandle.store_response" class="doc doc-heading">
+          <code class="highlight language-python">store_response(table_name, Respondent_ID, Attributes, Best_Attribute, Worst_Attribute, Block, Task, Age_Range, Gender)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>After getting the answer store it in the response table</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>table_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>name of the table to store the data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>Respondent_ID</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+              <b><code>Attributes</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+              <b><code>Best_Attribute</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+              <b><code>Worst_Attribute</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+              <b><code>Block</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+              <b><code>Task</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+              <b><code>Age_Range</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+            <li>
+              <b><code>Gender</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>e</code>
+              –
+              <div class="doc-md-description">
+                <p><em>description</em></p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>BWS\database\db_interactions.py</code></summary>
+            <pre class="highlight"><code class="language-python">def store_response(self, table_name:str, Respondent_ID:int, Attributes:list, Best_Attribute:str, Worst_Attribute:str, Block:int, Task:int, Age_Range:str, Gender:str):
+    """After getting the answer store it in the response table
+
+    Args:
+        table_name (str): name of the table to store the data
+        Respondent_ID (int): _description_
+        Attributes (list): _description_
+        Best_Attribute (str): _description_
+        Worst_Attribute (str): _description_
+        Block (int): _description_
+        Task (int): _description_
+        Age_Range (str): _description_
+        Gender (str): _description_
+
+    Raises:
+        e: _description_
+    """        
+    try:
+        for Attribute in Attributes:
+            Response = 0
+            if Attribute == Best_Attribute:
+                Response = 1
+                logger.info("The best Attribute is stored")
+            elif Attribute == Worst_Attribute:
+                Response = -1
+                logger.info("The worst Attribute is stored")
+
+            # Construct the INSERT query with the provided column name and table name
+            insert_query = f"INSERT INTO {table_name} (Response, Attribute, Respondent_ID, Block, Task, Age_Range, Gender) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            self.cursor.execute(insert_query, (Response, Attribute, Respondent_ID, Block, Task, Age_Range, Gender))
+
+        self.connection.commit()
+        logger.info('Operation completed successfully')
+    except Exception as e:
+        self.connection.rollback()
+        logger.warning("Make sure you filled everything correctly")
+        raise e</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../API/" class="btn btn-neutral float-left" title="API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Model/" class="btn btn-neutral float-right" title="Modelling">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../API/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Model/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
