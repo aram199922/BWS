@@ -2,6 +2,8 @@
 Tool for conducting and analyzing best-worst scaling surveys
 # The link of the package to pypi.org
 https://pypi.org/project/myBWS/
+# The link of the documentation
+https://aram199922.github.io/BWS/
 
 # Setup Repository
 
